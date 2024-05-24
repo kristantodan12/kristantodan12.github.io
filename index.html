@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Daniel Kristanto</title>
+    <style>
+        body { 
+            font-family: sans-serif; 
+            display: flex; 
+            flex-direction: column; 
+            align-items: flex-start; 
+            width: 60%; 
+            margin: auto; 
+        }
+        .container { 
+            display: flex; 
+            flex-direction: row; 
+            justify-content: flex-start; 
+            width: 100%; 
+            margin-bottom: 20px;  /* Add space between picture and the links */
+        }
+        .profile-picture { 
+            width: 150px; 
+            height: 200px; 
+            margin-right: 50px;  /* Add more space between profile picture and summary */
+        }
+        .profile-summary { 
+            text-align: justify; 
+            width: 100%; 
+            line-height: 1.6;
+        }
+        .links {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            width: 100%;
+            margin: auto;
+            padding-top: 20px;  /* Add space above the line */
+            border-top: 1px solid #000;  /* Add a line above the icons */
+        }
+
+        .links .icons {
+            display: flex;
+            justify-content: flex-start;
+            width: 100%;
+        }
+
+        .links a img {
+            width: 30px;
+            height: 30px;
+            margin: 0 10px;
+        }
+        .copyright {
+            text-align: right;
+            width: 100%;
+        }
+    </style>
+</head>
+<body>
+    <h1>Daniel Kristanto</h1>
+    <div class="container">
+        <img class="profile-picture" src="photo.jpg" alt="Your Picture">
+        <div class="profile-summary">
+            I work as a post-doc at the Psychological Methods and Statistics Lab, Department of Psychology,
+            University of Oldenburg (<a href="https://uol.de/psychologie/statistik/daniel-kristanto/" target="_blank">link</a>). I am currently working within the METAREP programme 
+            (<a href="https://www.meta-rep.uni-muenchen.de/aims-scope/index.html" target="_blank">link</a>), focusing on methods (e.g. multiverse
+            analysis (<a href="https://www.apps.meta-rep.lmu.de/METEOR/" target="_blank">link</a>)) to address the replication challenge in cognitive neuroscience research.<br><br>
+            I received my Ph.D. from the Department of Physics, Hong Kong Baptist University, under the supervision of Professor
+            Changsong Zhou. My research implemented data-driven approaches to understand brain-behaviour relationships. Prior to my 
+            Ph.D., I obtained Master's and Bachelor's degrees in Engineering from Sirindhorn International Institute of Technology, Thailand
+            and Universitas Gadjah Mada, Indonesia, respectively. <br><br>
+            My research interests include researching research, method development and method implementation in the field of
+            cognitive neuroscience. Specifically, I use approaches from machine learning and statistical methods to investigate
+            the uniqueness of each individual brain and its relationship to behaviour and disease.
+            </p>
+        </div>
+    </div>
+
+    <div class="links">
+        <div class="icons">
+            <a href="https://github.com/kristantodan12" target="_blank"><img src="github.png" alt="GitHub"></a>
+            <a href="https://scholar.google.com/citations?user=9Y4dUOEAAAAJ&hl=en" target="_blank"><img src="Scholar.png" alt="Google Scholar"></a>
+            <a href="mailto:daniel.kristanto@uni-oldenburg.de"><img src="mail.png" alt="Email"></a>
+            <a href="CV Kristanto.pdf" target="_blank"><img src="CV.png" alt="CV"></a>
+        </div>
+    </div>
+    <div class="copyright">
+        <p>&copy; 2024 Daniel Kristanto</p>
+    </div>
+</body>
+</html>
