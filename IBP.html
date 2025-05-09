@@ -3,23 +3,26 @@
 <head>
     <title>IBP Summary - Daniel Kristanto</title>
     <style>
-        /* You can copy relevant styles from your main CSS or keep it simple */
         body { 
             font-family: sans-serif; 
-            width: 70%; /* Adjust width as needed */
+            width: 80%; /* Increased width slightly for side-by-side content */
+            max-width: 1200px; /* Added max-width for larger screens */
             margin: auto; 
             padding-top: 20px;
             line-height: 1.6;
         }
-        img {
-            max-width: 100%; /* Make image responsive */
+        img.framework-figure { /* Specific class for the IBP.jpg figure */
+            max-width: 100%; 
             height: auto;
             display: block;
-            margin: 20px auto; /* Center image */
-            border: 1px solid #ccc; /* Optional border */
+            margin: 0; /* Removed auto margin for flex alignment */
+            border: 1px solid #ccc; 
         }
         h1, h2 {
             text-align: center;
+        }
+        h3 {
+            margin-top: 30px; /* Add some space above H3 */
         }
         p {
             text-align: justify;
@@ -29,6 +32,46 @@
             text-align: center;
             margin-top: 30px;
             font-weight: bold;
+        }
+        /* New styles for side-by-side layout */
+        .media-container {
+            display: flex;
+            flex-direction: row; /* Arrange children (video and figure) in a row */
+            justify-content: space-between; /* Distribute space between items */
+            align-items: flex-start; /* Align items to the top */
+            gap: 20px; /* Space between video and figure */
+            margin-top: 20px;
+            margin-bottom: 20px;
+        }
+        .media-item {
+            flex-basis: 48%; /* Each item takes roughly half the space, adjust as needed */
+            display: flex; /* Use flex for centering caption under video/figure */
+            flex-direction: column;
+            align-items: center; /* Center caption text */
+        }
+        .media-item .video-embed-container {
+            width: 100%; /* Make the video container responsive */
+            position: relative;
+            overflow: hidden;
+            aspect-ratio: 16/9; /* Standard video aspect ratio, adjust if needed */
+            margin-bottom: 10px; /* Space between video and its caption */
+        }
+        .media-item .video-embed-container iframe {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            border: none;
+            padding: 0;
+            margin: 0;
+            overflow: hidden;
+        }
+        .media-item figcaption, .media-item .video-caption {
+            text-align: center;
+            font-style: italic;
+            font-size: 0.9em;
+            margin-top: 5px;
         }
     </style>
 </head>
@@ -53,10 +96,22 @@
     </p>
 
     <h3>Project Framework Overview</h3>
-    <figure>
-        <img src="IBP.jpg" alt="Individual Brain Project Framework Diagram"> 
-        <figcaption style="text-align:center; font-style:italic; font-size:0.9em;">Conceptual overview of the Individual Brain Project.</figcaption>
-    </figure>
+    <div class="media-container">
+        <div class="media-item">
+            <div class="video-embed-container">
+                <iframe src="https://share.synthesia.io/embeds/videos/4d737bd9-7bcd-4e38-91d6-183b7d8b6ba9" loading="lazy" title="Synthesia video player - The Individual Brain Project: Optimizing Individuality Approaches in Neuroimaging Research – A Knowledge Graph-Based AI Development" allowfullscreen allow="encrypted-media; fullscreen;"></iframe>
+            </div>
+            <p class="video-caption">
+                The video was created using Synthesia AI following this 
+                <a href="Prompt_synthesia.txt" download="Prompt_synthesia.txt">Prompt</a>.
+            </p>
+        </div>
+        <div class="media-item">
+            <figure style="margin:0;"> <img class="framework-figure" src="IBP.jpg" alt="Individual Brain Project Framework Diagram"> 
+                <figcaption>Conceptual overview of the Individual Brain Project.</figcaption>
+            </figure>
+        </div>
+    </div>
 
     <hr>
 

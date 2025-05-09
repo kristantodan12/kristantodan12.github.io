@@ -1,0 +1,59 @@
+Project Title: The Individual Brain Project (IBP): A Knowledge Graph & AI Framework for Precision Neuroimaging
+
+Video Goal: Create a simple, illustrative animated video (approximately 60-90 seconds) summarizing the 'Individual Brain Project (IBP)'. The style should be clean, professional, 2D infographic animation with a logical flow from problem to solution to impact. Focus on clarity. Use a professional and engaging color palette. Ensure smooth transitions between scenes and that text overlays are concise and easily readable.
+
+Scene Breakdown:
+
+Scene 1: The Opening Challenge
+
+Visuals:
+Start with a prominent, rounded rectangle or cloud shape at the top left labeled: "Precision neuroimaging for robust biomarkers".
+An arrow should point from this to a larger, distinct colored (e.g., light red) rectangular box to its right labeled: "Challenges:".
+Below "Challenges," display two interconnected problem areas as distinct rounded rectangles:
+Left sub-box: "(i) Fragmentation of research efforts" (Perhaps visualize with small, scattered, disconnected circular icons below it).
+Right sub-box: "(ii) Increased degrees of freedom" (Perhaps visualize with tangled or diverging arrow pathway icons below it).
+Text Overlay (briefly appearing as elements are shown): "Challenge: Fragmentation & Reproducibility in Precision Neuroimaging."
+Scene 2: Identifying the Need
+
+Visuals: Arrows from both "Fragmentation" and "Increased degrees of freedom" boxes should converge downwards to a dashed-line rectangular box labeled: "Need for systematic, integrated framework". This box should appear centrally below the challenges.
+Text Overlay (with the "Need" box): "A systematic framework is essential."
+Scene 3: Proposing the Solution - Individual Brain Project (IBP)
+
+Visuals: An arrow should lead down from the "Need for systematic, integrated framework" box to a prominent, solid-colored (e.g., blue) rectangular box labeled: "Proposed solution: Individual Brain Project (IBP)". This IBP box should be central.
+Text Overlay (with the IBP box): "Solution: The Individual Brain Project."
+Scene 4: The Core - Curated Knowledge Graph (KG-IBP)
+
+Visuals: An arrow leads down from the "IBP" box to a large, central, distinct colored (e.g., light green) rounded rectangle labeled "Curated Knowledge Graph (KG-IBP)".
+Inside this KG-IBP box, include smaller text elements or icons to represent:
+"Nodes = Studies (Metadata, data characteristics, methodological details)" (Perhaps use a document icon).
+"Edges = Relationships (Similarity, Benchmarks)" (Perhaps use interconnected lines or a simple graph icon).
+Text Overlay (with KG-IBP box): "Core: KG-IBP – Curated graph of studies & methods."
+Scene 5: Building & Enriching KG-IBP (Work Packages 1 & 2)
+
+Visuals:
+To the left of the "KG-IBP" box, show a rectangular box labeled "WP 1 Systematic review and curation" (perhaps with a database or document stack icon). An arrow should point from this WP1 box into the KG-IBP box.
+Below WP1, another box labeled "WP 2 Benchmarking and relationship mapping" (perhaps with a scale/balance icon or graph icon). An arrow should point from this WP2 box into the KG-IBP box.
+Text Overlay (appearing sequentially or together): "Building the KG: WP1 (Curation) & WP2 (Benchmarking)."
+Scene 6: Leveraging KG-IBP - Project Outputs (Work Packages 3, 4, & 5)
+
+Visuals: Arrows should emerge from the right side of the "KG-IBP" box leading to three distinct output boxes (e.g., light yellow), each with a simple icon:
+Top output box: "WP 3 Method development and implementation" (icon: a lightbulb with gears, or a new branching pathway).
+Middle output box: "WP 4 Open Individual Brain Toolbox" (icon: a toolkit, gears, or an open box symbol).
+Bottom output box: "WP 5 Context-aware AI method recommender" (icon: an AI/robot head with a speech bubble, or a brain with connecting nodes).
+Text Overlay (appearing with outputs): "Key Outputs: New Methods (WP3), Open Toolbox (WP4), AI Recommender (WP5)."
+Scene 7: Overall Impact
+
+Visuals: Arrows from the three output boxes (WP3, WP4, WP5) and/or directly from the KG-IBP box should converge downwards to a final, impactful bar or box (e.g., darker green) at the bottom of the screen. This box should be labeled: "Impact: Cohesive and integrated research efforts, fostering robust and impactful precision neuroimaging research". The visual could show scattered elements becoming organized or an upward trend.
+Text Overlay (on the Impact box or as a final statement): "Fostering robust, impactful precision neuroimaging."
+Scene 8: End Screen (Optional)
+
+Visuals: IBP Title.
+Text Overlay: "The Individual Brain Project."
+General Instructions for AI:
+
+Ensure a clear visual hierarchy and flow, generally top-to-bottom and left-to-right where logical.
+Use simple, clean icons that are easily understandable.
+Transitions between scenes should be smooth (e.g., fade, wipe, or elements morphing).
+Keep animations simple and illustrative, serving to highlight the connections and flow of information.
+Text should be on screen long enough to be read easily.
+If music is an option, choose something neutral, professional, and subtly optimistic. No voiceover is needed for a simple version.
