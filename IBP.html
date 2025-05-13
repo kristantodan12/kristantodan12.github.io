@@ -3,26 +3,48 @@
 <head>
     <title>IBP Summary - Daniel Kristanto</title>
     <style>
+        /* ... your existing styles ... */
         body { 
             font-family: sans-serif; 
-            width: 80%; /* Increased width slightly for side-by-side content */
-            max-width: 1200px; /* Added max-width for larger screens */
+            width: 80%; 
+            max-width: 1200px; 
             margin: auto; 
             padding-top: 20px;
             line-height: 1.6;
         }
-        img.framework-figure { /* Specific class for the IBP.jpg figure */
-            max-width: 100%; 
-            height: auto;
-            display: block;
-            margin: 0; /* Removed auto margin for flex alignment */
-            border: 1px solid #ccc; 
-        }
         h1, h2 {
             text-align: center;
         }
+        
+        /* Styles for the colored/emphasized letters for the acronym */
+        .acronym-letter {
+            font-weight: bold; /* Or keep normal if you only want color */
+            color: #007bff; /* A standard blue color, change as needed */
+        }
+        
+        .acronym-tag {
+            font-weight: bold;
+            color: #007bff; /* Same blue color */
+            /* If you want the wavy underline like in your image, 
+               that's harder with pure CSS and might need SVG or a background image.
+               A simpler underline or just color difference is easier.
+               For example, for a dotted underline:
+               text-decoration: underline;
+               text-decoration-style: dotted; 
+            */
+            font-style: italic; /* Optional, if you like */
+        }
+
+        /* ... rest of your styles from IBP.html ... */
+        img.framework-figure { 
+            max-width: 100%; 
+            height: auto;
+            display: block;
+            margin: 0; 
+            border: 1px solid #ccc; 
+        }
         h3 {
-            margin-top: 30px; /* Add some space above H3 */
+            margin-top: 30px; 
         }
         p {
             text-align: justify;
@@ -33,28 +55,27 @@
             margin-top: 30px;
             font-weight: bold;
         }
-        /* New styles for side-by-side layout */
         .media-container {
             display: flex;
-            flex-direction: row; /* Arrange children (video and figure) in a row */
-            justify-content: space-between; /* Distribute space between items */
-            align-items: flex-start; /* Align items to the top */
-            gap: 20px; /* Space between video and figure */
+            flex-direction: row; 
+            justify-content: space-between; 
+            align-items: flex-start; 
+            gap: 20px; 
             margin-top: 20px;
             margin-bottom: 20px;
         }
         .media-item {
-            flex-basis: 48%; /* Each item takes roughly half the space, adjust as needed */
-            display: flex; /* Use flex for centering caption under video/figure */
+            flex-basis: 48%; 
+            display: flex; 
             flex-direction: column;
-            align-items: center; /* Center caption text */
+            align-items: center; 
         }
         .media-item .video-embed-container {
-            width: 100%; /* Make the video container responsive */
+            width: 100%; 
             position: relative;
             overflow: hidden;
-            aspect-ratio: 16/9; /* Standard video aspect ratio, adjust if needed */
-            margin-bottom: 10px; /* Space between video and its caption */
+            aspect-ratio: 16/9; 
+            margin-bottom: 10px; 
         }
         .media-item .video-embed-container iframe {
             position: absolute;
@@ -77,21 +98,21 @@
 </head>
 <body>
 
-    <h1>The Individual Brain Project</h1>
-    <h2>Optimizing Individuality Approaches in Neuroimaging Research - A Knowledge Graph-Based AI Development</h2>
+    <h1>The <span class="acronym-letter">I</span>ndividual <span class="acronym-letter">B</span>rain Project</h1>
+    <h2>An <span class="acronym-letter">AI</span>-Powered Knowledge Graph for Precision <span class="acronym-letter">N</span>euroimaging - (<span class="acronym-tag">iBRAIN</span>)</h2>
 
     <hr> 
 
     <h3>Overview</h3>
     <p>
-        The Individual Brain Project is designed to address key challenges 
+        The iBRAIN project is designed to address key challenges 
         in precision neuroimaging research trend: research fragmentation and increased researcher degrees of freedom. 
-        These challenges highlight the critical need for a systematic, integrated framework, which the Individual Brain Project provides as the proposed solution.
-        At the core of the project is the development of a Curated Knowledge Graph (KG-IBP), where nodes represent detailed information 
-        about studies and methods, and edges capture rich relationships including similarities and benchmark comparisons. The KG-IBP is 
+        These challenges highlight the critical need for a systematic, integrated framework, which the iBRAIN project provides as the proposed solution.
+        At the core of the project is the development of a Curated Knowledge Graph (iBRAIN-KG), where nodes represent detailed information 
+        about studies and methods, and edges capture rich relationships including similarities and benchmark comparisons. The iBRAIN-KG is 
         meticulously built using systematic review and curation (WP1) and comparative benchmarking (WP2). This structured knowledge 
         base subsequently guides novel method development (WP3) and enables the creation of the project's key outputs: 
-        an open 'Individual Brain Toolbox' (WP4) and context-aware AI tools like method recommenders (WP5). 
+        an open access iBRAIN-ToolBox (WP4) and context-aware iBRAIN-AI for method recommendation (WP5). 
         This integrated ecosystem aims to foster cohesive research efforts and accelerate robust, impactful progress in precision neuroimaging.
     </p>
 
@@ -107,7 +128,8 @@
             </p>
         </div>
         <div class="media-item">
-            <figure style="margin:0;"> <img class="framework-figure" src="IBP.jpg" alt="Individual Brain Project Framework Diagram"> 
+            <figure style="margin:0;"> 
+                <img class="framework-figure" src="IBP.jpg" alt="Individual Brain Project Framework Diagram"> 
                 <figcaption>Conceptual overview of the Individual Brain Project.</figcaption>
             </figure>
         </div>
