@@ -12,6 +12,38 @@
             padding-top: 20px;
             line-height: 1.6;
         }
+        
+        .back-link {
+            position: absolute;
+            top: 20px;
+            right: 30px;
+            display: flex;
+            align-items: center;
+            text-decoration: none;
+            font-weight: bold;
+            color: #007bff;
+            font-size: 1.1em;
+            z-index: 1000;
+            background: #fff;
+            padding: 6px 14px;
+            border-radius: 22px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+            transition: background 0.2s;
+        }
+
+        .back-link:hover {
+            background: #f0f4ff;
+            color: #0056b3;
+        }
+
+        .back-link .home-icon {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            margin-right: 8px;
+            vertical-align: middle;
+        }
+
         h1, h2 {
             text-align: center;
         }
@@ -98,22 +130,24 @@
 </head>
 <body>
 
-    <h1>The <span class="acronym-letter">I</span>ndividual <span class="acronym-letter">B</span>rain Project</h1>
-    <h2>An <span class="acronym-letter">AI</span>-Powered Knowledge Graph for Precision <span class="acronym-letter">N</span>euroimaging - (<span class="acronym-tag">iBRAIN</span>)</h2>
+    <h1>The <span class="acronym-letter">I</span>ndividual <span class="acronym-letter">Br</span>ain Project</h1>
+    <h2>An <span class="acronym-letter">AI</span>-powered knowledge graph for precision <span class="acronym-letter">N</span>euroimaging - (<span class="acronym-tag">iBrAIn</span>)</h2>
 
     <hr> 
 
     <h3>Overview</h3>
     <p>
-        The iBRAIN project is designed to address key challenges 
+        The iBrAIn project is designed to address key challenges 
         in precision neuroimaging research trend: research fragmentation and increased researcher degrees of freedom. 
-        These challenges highlight the critical need for a systematic, integrated framework, which the iBRAIN project provides as the proposed solution.
-        At the core of the project is the development of a Curated Knowledge Graph (iBRAIN-KG), where nodes represent detailed information 
-        about studies and methods, and edges capture rich relationships including similarities and benchmark comparisons. The iBRAIN-KG is 
+        These challenges highlight the critical need for a systematic, integrated framework, which the iBrAIn project provides as the proposed solution.
+        At the core of the project is the development of a curated knowledge graph (iBrAIn-KG), where nodes represent detailed information 
+        about studies and methods relevant for precision neuroiamging, and edges capture rich relationships including similarities and benchmark 
+        comparisons. The iBrAIn-KG is 
         meticulously built using systematic review and curation (WP1) and comparative benchmarking (WP2). This structured knowledge 
         base subsequently guides novel method development (WP3) and enables the creation of the project's key outputs: 
-        an open access iBRAIN-ToolBox (WP4) and context-aware iBRAIN-AI for method recommendation (WP5). 
-        This integrated ecosystem aims to foster cohesive research efforts and accelerate robust, impactful progress in precision neuroimaging.
+        an open access iBrAIn-ToolBox (WP4) and context-aware iBrAIn-AI for method recommendation (WP5). 
+        This integrated AI ecosystem (iBrAIn-KG, iBrAIn-ToolBox, and iBrAIn-AI ) aims to foster cohesive research efforts and accelerate 
+        robust, impactful progress in precision neuroimaging.
     </p>
 
     <h3>Project Framework Overview</h3>
@@ -130,14 +164,21 @@
         <div class="media-item">
             <figure style="margin:0;"> 
                 <img class="framework-figure" src="IBP.jpg" alt="Individual Brain Project Framework Diagram"> 
-                <figcaption>Conceptual overview of the Individual Brain Project.</figcaption>
+                <figcaption>Conceptual overview of the iBrAIn project.</figcaption>
             </figure>
         </div>
     </div>
 
     <hr>
 
-    <a href="index.html" class="back-link">Back to Main Page</a>
+    <a href="index.html" class="back-link">
+        <span class="home-icon">
+            <svg viewBox="0 0 20 20" fill="currentColor" width="20" height="20" aria-hidden="true">
+                <path d="M10.707 2.293a1 1 0 00-1.414 0l-7 7A1 1 0 003 11h1v6a1 1 0 001 1h3a1 1 0 001-1v-3h2v3a1 1 0 001 1h3a1 1 0 001-1v-6h1a1 1 0 00.707-1.707l-7-7z"/>
+            </svg>
+        </span>
+        Back to Main Page
+    </a>
 
 </body>
 </html>
