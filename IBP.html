@@ -1,21 +1,21 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>iBrAIn Project: Interactive Proposal Explorer</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script src="https://cdn.jsdelivr.net/npm/chart.js@3.7.1/dist/chart.min.js"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <!-- Visualization & Content Choices:
         - Hero: Text + Static HTML/CSS visualization of iBrAIn concept. Goal: Inform/Engage. Interaction: Static.
         - Challenge: Text + HTML/CSS diagram of silos. Goal: Inform. Interaction: Static.
         - Solution Overview: Text. Goal: Inform.
         - iBrAIn Ecosystem: Tabbed interface for KG, AI, ToolBox, Novel Methods. Each tab has text + icons/simple diagrams. Goal: Organize/Inform. Interaction: Tab selection (JS).
-        - Work Packages: Interactive HTML/CSS flowchart. Goal: Organize/Inform. Interaction: Click to highlight/detail (JS).
+        - Work Packages: Interactive HTML/CSS flowchart using flexbox for better wrapping. Goal: Organize/Inform. Interaction: Click to highlight/detail (JS).
         - Impact: Text + Conceptual graph (Chart.js). Goal: Inform. Interaction: Static.
         No SVG/Mermaid used. All diagrams are HTML/CSS based.
         -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>iBrAIn Project: Interactive Project Explorer</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@3.7.1/dist/chart.min.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
         body {
             font-family: 'Inter', sans-serif;
@@ -82,6 +82,9 @@
             display: flex;
             flex-direction: column;
             justify-content: center;
+            flex-grow: 0; 
+            flex-shrink: 0; 
+            min-width: 150px; 
         }
         .wp-node:hover {
             transform: translateY(-5px);
@@ -89,45 +92,56 @@
         }
         .wp-node.active {
             border-color: #0284c7; /* sky-600 */
-            box-shadow: 0 0 0 3px rgba(2, 132, 199, 0.5); /* sky-600 with opacity */
+            box-shadow: 0 0 0 3px rgba(2, 132, 199, 0.5); 
         }
-        .arrow {
-            position: relative;
+        .arrow-flex { 
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 2rem;
+            font-size: 1.75rem; 
             color: #38bdf8; /* sky-400 */
-            margin: 0.5rem 0;
+            padding: 0 0.75rem; 
+            flex-shrink: 0;
         }
         .chart-container {
             position: relative;
             width: 100%;
-            max-width: 600px; /* Example max-width */
+            max-width: 600px; 
             margin-left: auto;
             margin-right: auto;
-            height: 300px; /* Base height */
-            max-height: 400px; /* Max height */
+            height: 300px; 
+            max-height: 400px; 
         }
         @media (min-width: 768px) {
             .chart-container {
                 height: 350px;
             }
         }
-         .hero-figure-silo {
-            width: 60px; height: 80px; background-color: #cbd5e1; /* slate-300 */
-            border-radius: 0.25rem; margin: 0.5rem; display: flex;
-            align-items: center; justify-content: center; font-size: 0.75rem; text-align: center;
-        }
-        .hero-figure-kg {
-            width: 120px; height: 120px; background-color: #7dd3fc; /* sky-300 */
-            border-radius: 50%; display: flex; align-items: center; justify-content: center;
-            font-weight: 600; color: #0c4a6e; /* sky-800 */ text-align:center;
+         .hero-figure-study-item { 
+            width: 50px; height: 65px; 
+            background-color: #e2e8f0; /* slate-200 */
+            border: 1px solid #94a3b8; /* slate-400 */
+            border-radius: 0.25rem; 
+            display: flex;
+            align-items: center; justify-content: center; font-size: 0.65rem; text-align: center; 
+            position: relative;
         }
         .hero-figure-output {
-            width: 80px; height: 60px; background-color: #a7f3d0; /* emerald-200 */
+            width: 75px; height: 55px; 
+            background-color: #a7f3d0; /* emerald-200 */
             border-radius: 0.25rem; margin: 0.5rem; display: flex;
-            align-items: center; justify-content: center; font-size: 0.75rem; text-align: center;
+            align-items: center; justify-content: center; font-size: 0.7rem; text-align: center; 
+        }
+        .ibrain-letter {
+            color: #0284c7; /* sky-600 for iBrAIn letters */
+            font-weight: bold;
+        }
+        .grid-viz-container { 
+            position: relative;
+            width: 130px; 
+            height: 140px; 
+            margin-left: auto;
+            margin-right: auto;
         }
     </style>
 </head>
@@ -135,7 +149,9 @@
 
     <header class="bg-white shadow-md sticky top-0 z-50">
         <nav class="container mx-auto px-6 py-3 flex items-center justify-between">
-            <div class="text-2xl font-bold text-sky-700">iBrAIn Project</div>
+            <div class="text-2xl font-bold text-sky-700">
+                <span class="ibrain-letter">iBrAIn project</span>
+            </div>
             <div class="flex space-x-1 md:space-x-2">
                 <span class="nav-item active" data-section="hero">Home</span>
                 <span class="nav-item" data-section="challenge">The Challenge</span>
@@ -149,17 +165,32 @@
     <main class="container mx-auto px-6 py-8">
         <section id="hero" class="section active">
             <div class="text-center">
-                <h1 class="text-4xl md:text-5xl font-bold text-sky-700 mb-4">The Individual Brain Project (iBrAIn)</h1>
-                <p class="text-xl text-slate-600 mb-8">Towards an AI-powered knowledge graph to optimize the precision neuroimaging research ecosystem.</p>
+                <p class="text-5xl md:text-6xl font-bold text-slate-500 mb-4">
+                    (<span class="ibrain-letter">iBrAIn</span>)
+                </p>
+                <h1 class="text-2xl md:text-3xl text-slate-400 mb-8">
+                    The <span class="ibrain-letter">I</span>ndividual <span class="ibrain-letter">Br</span>ain Project: Towards an <span class="ibrain-letter">A</span><span class="ibrain-letter">I</span>-powered knowledge graph to optimize the precision <span class="ibrain-letter">n</span>euroimaging research ecosystem
+                </h1>
                  <div class="card max-w-4xl mx-auto mb-8">
                     <h2 class="text-2xl font-semibold text-sky-600 mb-4 text-center">Project at a Glance</h2>
                     <p class="text-slate-600 mb-6 text-center">This interactive application provides an overview of the iBrAIn project, detailing the challenges it addresses, the innovative solutions proposed, its work plan, and the anticipated impact on precision neuroimaging. Navigate through the sections to explore the project in depth.</p>
                     <div class="flex flex-col md:flex-row items-center justify-around p-4 space-y-4 md:space-y-0 md:space-x-4">
                         <div class="flex flex-col items-center space-y-2">
                             <p class="font-semibold text-slate-700 text-center">The Challenge:<br/>Fragmented Research</p>
-                            <div class="flex">
-                                <div class="hero-figure-silo">Silo 1<br/>(Method A)</div>
-                                <div class="hero-figure-silo">Silo 2<br/>(Method B)</div>
+                            <p class="text-xs text-slate-500 mb-1">(Operating in silos, lack of comparison)</p>
+                            <div class="grid-viz-container"> 
+                                <div class="grid grid-cols-2 gap-3 w-full h-full p-1"> 
+                                    <div class="hero-figure-study-item">Study 1<br/>(Method A)</div>
+                                    <div class="hero-figure-study-item">Study 2<br/>(Method B)</div>
+                                    <div class="hero-figure-study-item">Study 3<br/>(Method C)</div>
+                                    <div class="hero-figure-study-item">Study 4<br/>(Method D)</div>
+                                </div>
+                                <div class="absolute inset-0 flex items-center justify-center pointer-events-none">
+                                    <div class="relative w-5 h-5"> 
+                                        <div class="absolute w-full border-t-2 border-dashed border-red-400" style="top: 50%; left: 0; transform: translateY(-1px) rotate(45deg) scale(1.2);"></div>
+                                        <div class="absolute w-full border-t-2 border-dashed border-red-400" style="top: 50%; left: 0; transform: translateY(-1px) rotate(-45deg) scale(1.2);"></div>
+                                    </div>
+                                </div>
                             </div>
                              <div class="text-2xl text-red-500 font-bold my-1">↯</div>
                              <p class="text-xs text-red-500">Replication Issues</p>
@@ -167,17 +198,30 @@
                         <div class="text-4xl text-sky-500 font-bold hidden md:block p-4">&rarr;</div>
                          <div class="text-4xl text-sky-500 font-bold md:hidden p-2">&darr;</div>
                         <div class="flex flex-col items-center space-y-2">
-                            <p class="font-semibold text-sky-700 text-center">iBrAIn Solution:<br/>Integrated Ecosystem</p>
-                            <div class="hero-figure-kg">iBrAIn-KG<br/>Deep Knowledge</div>
-                            <div class="flex text-xl text-sky-500 space-x-2 my-1"><span>&#x1F50D;</span> <span>&#x1F9E0;</span> <span>&#x1F9EE;</span></div>
-                            <p class="text-xs text-sky-600">(KG informs AI, Tools, Methods)</p>
+                            <p class="font-semibold text-sky-700 text-center">iBrAIn Solution:<br/>Integrated Ecosystem as a Knowledge Graph (iBrAIn-KG)</p>
+                             <div class="grid-viz-container"> 
+                                <div class="grid grid-cols-2 gap-3 w-full h-full p-1">
+                                    <div class="hero-figure-study-item border-emerald-500">Study 1</div>
+                                    <div class="hero-figure-study-item border-emerald-500">Study 2</div>
+                                    <div class="hero-figure-study-item border-emerald-500">Study 3</div>
+                                    <div class="hero-figure-study-item border-emerald-500">Study 4</div>
+                                </div>
+                                <div class="absolute inset-0 flex items-center justify-center pointer-events-none">
+                                    <div class="relative w-5 h-5"> 
+                                        <div class="absolute w-full border-t-2 border-solid border-emerald-500" style="top: 50%; left: 0; transform: translateY(-1px) rotate(45deg) scale(1.2);"></div>
+                                        <div class="absolute w-full border-t-2 border-solid border-emerald-500" style="top: 50%; left: 0; transform: translateY(-1px) rotate(-45deg) scale(1.2);"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="flex text-xl text-sky-500 space-x-2 my-1"><span>&#x1F9E0;</span> <span>&#x1F9EE;</span> <span>&#x1F50D;</span></div>
+                            <p class="text-xs text-sky-600 mt-1">KG-informed iBrAIn-AI, ToolBox, Methods</p>
                         </div>
                         <div class="text-4xl text-sky-500 font-bold hidden md:block p-4">&rarr;</div>
                         <div class="text-4xl text-sky-500 font-bold md:hidden p-2">&darr;</div>
                         <div class="flex flex-col items-center space-y-2">
                             <p class="font-semibold text-emerald-700 text-center">The Impact:<br/>Coherent Research</p>
                             <div class="flex">
-                                <div class="hero-figure-output">Novel Methods</div>
+                                <div class="hero-figure-output">Context-Aware Methods</div>
                                 <div class="hero-figure-output">Reliable Biomarkers</div>
                             </div>
                             <div class="text-2xl text-emerald-500 font-bold my-1">&pi;</div>
@@ -224,7 +268,7 @@
             <h2 class="text-3xl font-bold text-sky-700 mb-6 text-center">The iBrAIn Solution: An Integrated Ecosystem</h2>
             <div class="card mb-6">
                 <p class="text-lg text-slate-600 mb-4">This section details the iBrAIn project's comprehensive approach to tackle research fragmentation. iBrAIn proposes an integrated ecosystem built around a specialized Knowledge Graph, designed to foster cohesive research and robust findings.</p>
-                <p class="mb-4">The Individual Brain Project (iBrAIn) will create an integrated research ecosystem using multiple large datasets. Central to this is the <strong class="text-sky-600">iBrAIn-KG</strong>, a foundational knowledge graph. It distinctively models studies as primary nodes and their interrelationships as edges, prioritizing rich, AI-supported yet human-curated methodological information (granular parameters, data characteristics, comparative benchmarks) over superficial automated extraction.</p>
+                <p class="mb-4">The iBrAIn project will create an integrated research ecosystem. Central to this is the <strong class="text-sky-600">iBrAIn-KG</strong>, a foundational knowledge graph. It distinctively models studies as primary nodes and their interrelationships as edges, prioritizing rich, AI-supported yet human-curated methodological information (granular parameters, data characteristics, comparative benchmarks) over superficial automated extraction.</p>
                 <p class="mb-4">The iBrAIn project will advance precision neuroimaging in two main ways:</p>
                 <ul class="list-disc list-inside space-y-2 mb-4 ml-4 text-slate-700">
                     <li>Direct involvement in the <strong class="text-emerald-600">development and validation of novel MRI-based personalized methods</strong> aimed at robust biomarkers, leveraging structured findings from the iBrAIn-KG.</li>
@@ -254,9 +298,9 @@
                 </div>
                 <div id="novel-methods-content" class="tab-content">
                      <h4 class="text-xl font-semibold text-sky-700 mb-2">💡 Novel Individuality Methods: KG-Informed Innovation</h4>
-                    <p>Leveraging the detailed methodological landscape mapped by iBrAIn-KG, the project will focus on targeted innovation. Insights from the KG (e.g., identified gaps, performance bottlenecks) will strategically guide the development and enhancement of novel techniques for capturing brain individuality, aiming for robust and clinically relevant biomarkers.</p>
+                    <p>Leveraging the detailed methodological landscape mapped by iBrAIn-KG, the project will focus on targeted innovation. Insights from the iBrAIn-KG (e.g., identified gaps, performance bottlenecks) will strategically guide the development and enhancement of novel techniques for capturing brain individuality, aiming for robust and clinically relevant biomarkers.</p>
                 </div>
-                <p class="mt-6 text-center text-slate-600">Together, these components form a synergistic ecosystem allowing researchers to explore the methodological landscape, receive context-aware recommendations via iBrAIn-AI, and implement methods using the iBrAIn-ToolBox.</p>
+                <p class="mt-6 text-center text-slate-600">Together, these components form a synergistic ecosystem allowing researchers to explore the methodological landscape through iBrAIn-KG, receive context-aware recommendations via iBrAIn-AI, and implement methods using the iBrAIn-ToolBox.</p>
             </div>
         </section>
 
@@ -264,15 +308,15 @@
             <h2 class="text-3xl font-bold text-sky-700 mb-6 text-center">Project Roadmap: Work Packages</h2>
             <div class="card mb-6">
                 <p class="text-lg text-slate-600 mb-6 text-center">The iBrAIn project is structured into five interconnected work packages (WPs), each contributing to the overall objectives. Click on a WP to see more details.</p>
-                <div class="grid grid-cols-1 md:grid-cols-5 gap-4 items-start mb-6">
+                <div class="flex flex-wrap items-center justify-center gap-x-2 gap-y-4 mb-6">
                     <div class="wp-node" data-wp="wp1">WP1: KG Node Curation</div>
-                    <div class="arrow md:hidden">&darr;</div> <div class="arrow hidden md:block">&rarr;</div>
+                    <div class="arrow-flex md:hidden">&darr;</div> <div class="arrow-flex hidden md:inline-flex">&rarr;</div>
                     <div class="wp-node" data-wp="wp2">WP2: KG Edge & Cluster Definition</div>
-                    <div class="arrow md:hidden">&darr;</div> <div class="arrow hidden md:block">&rarr;</div>
+                    <div class="arrow-flex md:hidden">&darr;</div> <div class="arrow-flex hidden md:inline-flex">&rarr;</div>
                     <div class="wp-node" data-wp="wp3">WP3: Novel Method Development</div>
-                     <div class="arrow md:hidden">&darr;</div><div class="arrow hidden md:block">&rarr;</div>
+                    <div class="arrow-flex md:hidden">&darr;</div> <div class="arrow-flex hidden md:inline-flex">&rarr;</div>
                     <div class="wp-node" data-wp="wp4">WP4: iBrAIn-ToolBox</div>
-                     <div class="arrow md:hidden">&darr;</div><div class="arrow hidden md:block">&rarr;</div>
+                    <div class="arrow-flex md:hidden">&darr;</div> <div class="arrow-flex hidden md:inline-flex">&rarr;</div>
                     <div class="wp-node" data-wp="wp5">WP5: iBrAIn-AI Tool</div>
                 </div>
                  <div id="wp-details-container" class="mt-6 p-4 bg-stone-50 rounded-lg min-h-[100px]">
@@ -287,10 +331,10 @@
                 <p class="text-lg text-slate-600 mb-6 text-center">This section describes the expected broader impact of the iBrAIn project on the field of precision neuroimaging and its potential to accelerate biomarker discovery.</p>
                 <div class="grid md:grid-cols-2 gap-6 items-center">
                     <div>
-                        <p class="mb-4">The iBrAIn ecosystem aims to fundamentally optimize the precision neuroimaging research lifecycle. By systematically organizing methodological knowledge and providing intelligent tools, the project will:</p>
+                        <p class="mb-4">The iBrAIn ecosystem aims to fundamentally optimize the precision neuroimaging research ecosystem. By systematically organizing methodological knowledge and providing intelligent tools, the project will:</p>
                         <ul class="list-disc list-inside space-y-2 mb-4 ml-4 text-slate-700">
                             <li><strong class="text-emerald-600">Enhance Research Coherence:</strong> Reduce fragmentation by providing a common framework and facilitating comparison of methods.</li>
-                            <li><strong class="text-emerald-600">Promote Reproducibility:</strong> Encourage transparent and standardized methodological approaches through the KG and ToolBox.</li>
+                            <li><strong class="text-emerald-600">Promote Reproducibility:</strong> Encourage transparent and standardized methodological approaches through the iBrAIn-KG and -ToolBox.</li>
                             <li><strong class="text-emerald-600">Accelerate Innovation:</strong> Guide the development of novel, more robust personalized methods.</li>
                             <li><strong class="text-emerald-600">Empower Researchers:</strong> Provide accessible tools and AI-driven guidance for complex analytical choices.</li>
                         </ul>
@@ -305,7 +349,7 @@
     </main>
 
     <footer class="bg-slate-800 text-stone-300 text-center p-6 mt-12">
-        <p>&copy; 2025 iBrAIn Project Interactive Explorer. Conceptual SPA. All information derived from the proposal draft.</p>
+        <p>&copy; 2025 iBrAIn Project Interactive Explorer. Daniel Kristanto supported by Gemini AI.</p>
     </footer>
 
 <script>
@@ -375,15 +419,15 @@
             },
             wp3: { 
                 title: "WP3: KG-Informed Development and Validation of Novel Individuality Methods", 
-                description: "Using the detailed methodological landscape mapped by iBrAIn-KG, WP3 focuses on targeted innovation. Insights from the KG (gaps, bottlenecks) will guide the development of enhancements to existing methods and novel techniques for capturing brain individuality (e.g., optimizing early-stage pipeline individualization, integrating multimodal MRI, interpretable ML, individualized psychometric models). Methods will be validated in clinical contexts."
+                description: "Using the detailed methodological landscape mapped by iBrAIn-KG, WP3 focuses on targeted innovation. Insights from the iBrAIn-KG (gaps, bottlenecks) will guide the development of enhancements to existing methods and novel techniques for capturing brain individuality (e.g., optimizing early-stage pipeline individualization, integrating multimodal MRI, interpretable ML, individualized psychometric models). Methods will be validated in clinical contexts."
             },
             wp4: { 
                 title: "WP4: The iBrAIn-ToolBox: Translating Knowledge into Practice", 
-                description: "This WP delivers the open-source iBrAIn-Toolbox for researchers with diverse computational expertise. Its modular design (command-line and potential GUI) facilitates flexible implementation of individuality methods from iBrAIn-KG. It will be integrated with the KG, allowing users to seamlessly explore the methodological landscape and apply relevant methods to their own data."
+                description: "This WP delivers the open-source iBrAIn-Toolbox for researchers with diverse computational expertise. Its modular design (command-line and potential GUI) facilitates flexible implementation of individuality methods from iBrAIn-KG. It will be integrated with the iBrAIn-KG, allowing users to seamlessly explore the methodological landscape and apply relevant methods to their own data."
             },
             wp5: { 
                 title: "WP5: Pioneering KG-powered AI Tool (iBrAIn-AI) for Methodological Guidance", 
-                description: "WP5 pioneers iBrAIn-AI, enabled by the KG's unique structure and depth. It leverages a pretrained LLM enhanced via a RAG framework querying iBrAIn-KG. A synergistic approach using NLP and GNN-derived embeddings (capturing deep methodological context) will underpin a context- and method-aware recommendation system for optimal individuality methods. iBrAIn-AI will integrate with the ToolBox for direct execution of recommendations and standardized reporting."
+                description: "WP5 pioneers iBrAIn-AI, enabled by the iBrAIn-KG's unique structure and depth. It leverages a pretrained LLM enhanced via a RAG framework querying iBrAIn-KG. A synergistic approach using NLP and GNN-derived embeddings (capturing deep methodological context) will underpin a context- and method-aware recommendation system for optimal individuality methods. iBrAIn-AI will integrate with the ToolBox for direct execution of recommendations and standardized reporting."
             }
         };
 
@@ -408,7 +452,7 @@
             new Chart(ctxImpact.getContext('2d'), {
                 type: 'line',
                 data: {
-                    labels: ['Current State', 'Year 1-2', 'Year 3-4', 'Year 5-6 (iBrAIn Impact)'],
+                    labels: ['Current State', 'Time 1', 'Time 2', 'Time 3'],
                     datasets: [{
                         label: 'Research Coherence & Impact',
                         data: [30, 45, 65, 90],
@@ -417,7 +461,7 @@
                         fill: true,
                         tension: 0.3
                     }, {
-                        label: 'Biomarker Discovery Rate (Conceptual)',
+                        label: 'Biomarker Discovery Rate',
                         data: [20, 30, 50, 80],
                         borderColor: '#0ea5e9', // sky-500
                         backgroundColor: 'rgba(14, 165, 233, 0.1)',
