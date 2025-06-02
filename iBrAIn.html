@@ -1,15 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <!-- Visualization & Content Choices:
-        - Hero: Text + Static HTML/CSS visualization of iBrAIn concept. Goal: Inform/Engage. Interaction: Static.
-        - Challenge: Text + HTML/CSS diagram of silos. Goal: Inform. Interaction: Static.
-        - Solution Overview: Text. Goal: Inform.
-        - iBrAIn Ecosystem: Tabbed interface for KG, AI, ToolBox, Novel Methods. Each tab has text + icons/simple diagrams. Goal: Organize/Inform. Interaction: Tab selection (JS).
-        - Work Packages: Interactive HTML/CSS flowchart using flexbox for better wrapping. Goal: Organize/Inform. Interaction: Click to highlight/detail (JS).
-        - Impact: Text + Conceptual graph (Chart.js). Goal: Inform. Interaction: Static.
-        No SVG/Mermaid used. All diagrams are HTML/CSS based.
-        -->
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>iBrAIn Project: Interactive Project Explorer</title>
@@ -70,7 +61,7 @@
         .tab-content.active {
             display: block;
         }
-        .wp-node {
+        .wp-node-display { /* Common styling for WP display blocks in new layout */
             background-color: #f0f9ff; /* sky-50 */
             border: 2px solid #38bdf8; /* sky-400 */
             padding: 1rem;
@@ -78,30 +69,19 @@
             text-align: center;
             cursor: pointer;
             transition: transform 0.2s, box-shadow 0.2s;
-            min-height: 100px;
+            min-height: 80px; 
             display: flex;
             flex-direction: column;
             justify-content: center;
-            flex-grow: 0; 
-            flex-shrink: 0; 
-            min-width: 150px; 
+            align-items: center;
         }
-        .wp-node:hover {
+        .wp-node-display:hover {
             transform: translateY(-5px);
             box-shadow: 0 10px 15px -3px rgba(0,0,0,0.1), 0 4px 6px -2px rgba(0,0,0,0.05);
         }
-        .wp-node.active {
+        .wp-node-display.active {
             border-color: #0284c7; /* sky-600 */
             box-shadow: 0 0 0 3px rgba(2, 132, 199, 0.5); 
-        }
-        .arrow-flex { 
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.75rem; 
-            color: #38bdf8; /* sky-400 */
-            padding: 0 0.75rem; 
-            flex-shrink: 0;
         }
         .chart-container {
             position: relative;
@@ -177,19 +157,18 @@
                     The <span class="ibrain-letter">I</span>ndividual <span class="ibrain-letter">Br</span>ain Project: Towards an <span class="ibrain-letter">A</span><span class="ibrain-letter">I</span>-powered knowledge graph to optimize the precision <span class="ibrain-letter">n</span>euroimaging research ecosystem
                 </h1>
                 <div class="card max-w-4xl mx-auto mb-8">
-                    <h2 class="text-2xl font-semibold text-sky-600 mb-4 text-center">Project at a Glance</h2>
-                    <p class="text-slate-600 mb-6 text-center">This interactive application provides an overview of the iBrAIn project, detailing the challenges it addresses, the innovative solutions proposed, its work plan, and the anticipated impact on precision neuroimaging. Navigate through the sections to explore the project in depth.</p>
+                    <h2 class="text-2xl font-semibold text-sky-600 mb-4 text-center">The Project at a Glance</h2>
+                    <p class="text-slate-600 mb-6 text-center">This application provides an overview of the iBrAIn project, detailing the challenges it addresses, the innovative solutions proposed, its work plan, and the anticipated impact on precision neuroimaging. Navigate through the sections to explore the project in depth.</p>
                     <img src="Overview.jpg" alt="iBrAIn Project Overview" class="mx-auto rounded-lg shadow-md mb-4 h-auto" style="max-width:400px;" />
                 </div>
-                <p class="text-slate-500">Use the navigation bar above to explore different facets of the iBrAIn project.</p>
+                <p class="text-slate-500">Use the navigation bar above to explore the iBrAIn project details.</p>
             </div>
         </section>
 
         <section id="challenge" class="section">
-            <h2 class="text-3xl font-bold text-sky-700 mb-6 text-center">The Challenge: A Fragmented Landscape</h2>
+            <h2 class="text-3xl font-bold text-sky-700 mb-6 text-center">The Challenge: The Fragmented Research Methods in Precision Neuroimaging</h2>
             <div class="card mb-6">
-                <p class="text-lg text-slate-600 mb-4">This section outlines the critical issues in current precision neuroimaging research that iBrAIn aims to address, primarily focusing on research fragmentation and its consequences.</p>
-                <p class="mb-4">Brain neuroimaging research using MRI faces a critical translational bottleneck. Despite aiming to establish reliable biomarkers by relating neuroimaging features to cognitive-behavioral phenotypes, findings are often plagued by a lack of replication and small effect sizes. This significantly hinders the translation of research findings into clinical applications.</p>
+                <p class="mb-4">Human brain neuroimaging using Magnetic Resonance Imaging (MRI) faces a critical translational bottleneck: efforts to establish reliable biomarkers are often hampered by a lack of replication and small effect sizes.</p>
                 <p class="mb-4">A promising response is the shift towards <strong class="text-sky-600">precision neuroimaging</strong>, which focuses on individualized rather than group-level brain features. While the quest for individuality has led to numerous MRI-based personalized methods, their development often occurs in silos, with limited systematic integration or comparative evaluation.</p>
                 <div class="flex flex-col md:flex-row items-center justify-center space-y-4 md:space-y-0 md:space-x-8 my-8 p-6 bg-stone-50 rounded-lg">
                     <div class="flex flex-col items-center p-4 bg-white shadow-lg rounded-lg border border-red-300">
@@ -259,20 +238,47 @@
         <section id="roadmap" class="section">
             <h2 class="text-3xl font-bold text-sky-700 mb-6 text-center">Project Roadmap: Work Packages</h2>
             <div class="card mb-6">
-                <p class="text-lg text-slate-600 mb-6 text-center">The iBrAIn project is structured into five interconnected work packages (WPs), each contributing to the overall objectives. Click on a WP to see more details.</p>
-                <div class="flex flex-wrap items-center justify-center gap-x-2 gap-y-4 mb-6">
-                    <div class="wp-node" data-wp="wp1">WP1: KG Node Curation</div>
-                    <div class="arrow-flex md:hidden">&darr;</div> <div class="arrow-flex hidden md:inline-flex">&rarr;</div>
-                    <div class="wp-node" data-wp="wp2">WP2: KG Edge & Cluster Definition</div>
-                    <div class="arrow-flex md:hidden">&darr;</div> <div class="arrow-flex hidden md:inline-flex">&rarr;</div>
-                    <div class="wp-node" data-wp="wp3">WP3: Novel Method Development</div>
-                    <div class="arrow-flex md:hidden">&darr;</div> <div class="arrow-flex hidden md:inline-flex">&rarr;</div>
-                    <div class="wp-node" data-wp="wp4">WP4: iBrAIn-ToolBox</div>
-                    <div class="arrow-flex md:hidden">&darr;</div> <div class="arrow-flex hidden md:inline-flex">&rarr;</div>
-                    <div class="wp-node" data-wp="wp5">WP5: iBrAIn-AI Tool</div>
+                <p class="text-lg text-slate-600 mb-6 text-center">The iBrAIn project is structured into five interconnected work packages (WPs), each contributing to the overall objectives. Click on a WP to learn more.</p>
+                
+                <div class="flex flex-col items-center space-y-4 py-4">
+                    <!-- WP1 & WP2 as foundational KG block -->
+                    <div class="wp-node-display w-full md:w-3/4 lg:w-1/2" data-wp="wp1_2">
+                        <span class="text-lg font-semibold">WP1 & WP2: Building the iBrAIn-KG</span>
+                        <div class="flex justify-center space-x-2 mt-1">
+                            <span class="text-2xl" title="WP1: KG Node Curation">&#x1F4DD;</span> <!-- Document/Data Icon -->
+                            <span class="text-2xl" title="WP2: KG Edge & Cluster Definition">&#x1F578;</span> <!-- Network Icon -->
+                        </div>
+                        <p class="text-sm text-slate-500 mt-1">Systematic Curation & Relationship Mapping</p>
+                    </div>
+
+                    <!-- Connector -->
+                    <div class="h-8 w-1 bg-sky-400 my-2"></div>
+
+                    <!-- WP3, WP4, WP5 branching out -->
+                    <div class="flex flex-col md:flex-row justify-around w-full space-y-4 md:space-y-0 md:space-x-4 px-2">
+                        <div class="flex flex-col items-center md:w-1/3">
+                            <div class="wp-node-display w-full" data-wp="wp3">
+                                <span class="text-lg font-semibold">WP3: Novel Methods</span>
+                                <span class="text-2xl mt-1">&#x1F4A1;</span> <!-- Lightbulb Icon -->
+                            </div>
+                        </div>
+                        <div class="flex flex-col items-center md:w-1/3">
+                             <div class="wp-node-display w-full" data-wp="wp4">
+                                <span class="text-lg font-semibold">WP4: iBrAIn-ToolBox</span>
+                                <span class="text-2xl mt-1">&#x1F9F0;</span> <!-- Toolbox Icon -->
+                            </div>
+                        </div>
+                        <div class="flex flex-col items-center md:w-1/3">
+                            <div class="wp-node-display w-full" data-wp="wp5">
+                                <span class="text-lg font-semibold">WP5: iBrAIn-AI Tool</span>
+                                 <span class="text-2xl mt-1">&#x1F9E0;</span> <!-- AI/Chip/Brain Icon -->
+                            </div>
+                        </div>
+                    </div>
                 </div>
-                 <div id="wp-details-container" class="mt-6 p-4 bg-stone-50 rounded-lg min-h-[100px]">
-                    <p class="text-slate-500 text-center">Select a Work Package above to learn more about its specific goals and methods.</p>
+
+                 <div id="wp-details-container" class="mt-8 p-6 bg-stone-100 rounded-lg min-h-[150px]">
+                    <p class="text-slate-500 text-center">Select a Work Package component above to learn more about its specific goals and methods.</p>
                 </div>
             </div>
         </section>
@@ -301,7 +307,7 @@
     </main>
 
     <footer class="bg-slate-800 text-stone-300 text-center p-6 mt-12">
-        <p>&copy; 2025 iBrAIn Project Interactive Explorer. Daniel Kristanto supported by Gemini AI.</p>
+        <p>&copy; 2025 iBrAIn Project Interactive Explorer. Daniel Kristanto, with assistance from Gemini AI.</p>
     </footer>
 
 <script>
@@ -333,41 +339,29 @@
             });
         });
 
-        showSection('hero'); // Show hero section by default
+        showSection('hero'); 
 
-        // Tabs functionality
         const tabButtons = document.querySelectorAll('.tab-button');
         const tabContents = document.querySelectorAll('.tab-content');
 
         tabButtons.forEach(button => {
             button.addEventListener('click', () => {
                 const targetTab = button.dataset.tab + '-content';
-
                 tabButtons.forEach(btn => btn.classList.remove('active'));
                 button.classList.add('active');
-
                 tabContents.forEach(content => {
-                    if (content.id === targetTab) {
-                        content.classList.add('active');
-                    } else {
-                        content.classList.remove('active');
-                    }
+                    content.classList.toggle('active', content.id === targetTab);
                 });
             });
         });
 
-        // Work Packages interactivity
-        const wpNodes = document.querySelectorAll('.wp-node');
+        const wpDisplayNodes = document.querySelectorAll('.wp-node-display');
         const wpDetailsContainer = document.getElementById('wp-details-container');
         
         const wpData = {
-            wp1: { 
-                title: "WP1: Systematic Identification and Curation of iBrAIn-KG Nodes", 
-                description: "This foundational package systematically identifies and deeply curates studies on MRI-based personalized methods, forming the initial iBrAIn-KG nodes. It involves a rigorous systematic knowledge analytics and an AI-supported, human-curated coding process to extract granular information about studies and methods, capturing metadata, data characteristics, methodological parameters, motivations, and outcomes. This deep curation provides a rich foundation for subsequent development."
-            },
-            wp2: { 
-                title: "WP2: Establishing iBrAIn-KG Edges and Clusters via Comparative Evaluation", 
-                description: "This WP defines the KG edges, representing associations among study-nodes. Edges encode explicit links (citations, methodological similarities) and quantitatively derived relationships from standardized benchmarking of MRI-based personalized methods across various datasets and criteria (test-retest reliability, data reconstructability, prediction performance). Cluster identification algorithms will group studies to enrich the KG and enable systematic understanding of the research landscape."
+            wp1_2: { 
+                title: "WPs 1 & 2: Building the iBrAIn-KG Foundation", 
+                description: "<strong>WP1 (Systematic Identification and Curation of iBrAIn-KG Nodes):</strong> This foundational package systematically identifies and deeply curates studies on MRI-based personalized methods, forming the initial iBrAIn-KG nodes. It involves a rigorous systematic knowledge analytics and an AI-supported, human-curated coding process to extract granular information about studies and methods, capturing metadata, data characteristics, methodological parameters, motivations, and outcomes. This deep curation provides a rich foundation for subsequent development. <br/><br/> <strong>WP2 (Establishing iBrAIn-KG Edges and Clusters via Comparative Evaluation):</strong> This WP defines the KG edges, representing associations among study-nodes. Edges encode explicit links (citations, methodological similarities) and quantitatively derived relationships from standardized benchmarking of MRI-based personalized methods across various datasets and criteria (test-retest reliability, data reconstructability, prediction performance). Cluster identification algorithms will group studies to enrich the KG and enable systematic understanding of the research landscape."
             },
             wp3: { 
                 title: "WP3: KG-Informed Development and Validation of Novel Individuality Methods", 
@@ -383,39 +377,40 @@
             }
         };
 
-        wpNodes.forEach(node => {
+        wpDisplayNodes.forEach(node => {
             node.addEventListener('click', function() {
-                wpNodes.forEach(n => n.classList.remove('active'));
+                wpDisplayNodes.forEach(n => n.classList.remove('active'));
                 this.classList.add('active');
                 const wpId = this.dataset.wp;
                 const data = wpData[wpId];
                 if (data) {
                     wpDetailsContainer.innerHTML = `
-                        <h4 class="text-xl font-semibold text-sky-700 mb-2">${data.title}</h4>
-                        <p class="text-slate-600">${data.description}</p>
+                        <h4 class="text-xl font-semibold text-sky-700 mb-3">${data.title}</h4>
+                        <p class="text-slate-600 text-sm leading-relaxed">${data.description}</p>
                     `;
+                } else {
+                     wpDetailsContainer.innerHTML = '<p class="text-slate-500 text-center">Details for this WP will be populated here.</p>';
                 }
             });
         });
         
-        // Impact Chart
         const ctxImpact = document.getElementById('impactChart');
         if (ctxImpact) {
             new Chart(ctxImpact.getContext('2d'), {
                 type: 'line',
                 data: {
-                    labels: ['Current State', 'Time 1', 'Time 2', 'Time 3'],
+                    labels: ['Current State', 'T1', 'T2', 'T3'],
                     datasets: [{
                         label: 'Research Coherence & Impact',
                         data: [30, 45, 65, 90],
-                        borderColor: '#10b981', // emerald-500
+                        borderColor: '#10b981', 
                         backgroundColor: 'rgba(16, 185, 129, 0.1)',
                         fill: true,
                         tension: 0.3
                     }, {
-                        label: 'Biomarker Discovery Rate',
+                        label: 'Reliable Biomarker Discovery Rate',
                         data: [20, 30, 50, 80],
-                        borderColor: '#0ea5e9', // sky-500
+                        borderColor: '#0ea5e9', 
                         backgroundColor: 'rgba(14, 165, 233, 0.1)',
                         fill: true,
                         tension: 0.3
@@ -424,23 +419,8 @@
                 options: {
                     responsive: true,
                     maintainAspectRatio: false,
-                    scales: {
-                        y: {
-                            beginAtZero: true,
-                            max: 100,
-                            title: { display: true, text: 'Relative Improvement / Rate (%)' }
-                        }
-                    },
-                    plugins: {
-                        legend: { position: 'top' },
-                        tooltip: {
-                            callbacks: {
-                                label: function(context) {
-                                    return `${context.dataset.label}: ${context.formattedValue}% (Conceptual)`;
-                                }
-                            }
-                        }
-                    }
+                    scales: { y: { beginAtZero: true, max: 100, title: { display: true, text: 'Relative Improvement / Rate (%)' } } },
+                    plugins: { legend: { position: 'top' }, tooltip: { callbacks: { label: function(context) { return `${context.dataset.label}: ${context.formattedValue}% (Conceptual)`; } } } }
                 }
             });
         }
