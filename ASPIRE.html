@@ -11,12 +11,21 @@
     <style>
         body {
             font-family: 'Inter', sans-serif;
-            background-color: #f3f4f6;
+            background-color: #0d1a2e; /* Dark blue background */
+            color: #e0e0e0;
+        }
+        canvas#bg-canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
         }
         .tab-btn.active {
-            border-color: #0d9488; /* teal-600 */
-            color: #0f766e; /* teal-700 */
-            background-color: #f0fdfa; /* teal-50 */
+            border-color: #2dd4bf; /* teal-400 */
+            color: #ffffff;
+            background-color: rgba(20, 184, 166, 0.2);
         }
         .tab-content {
             display: none;
@@ -43,7 +52,7 @@
             padding: 0 1.5rem;
         }
         .wp-details.open {
-            max-height: 500px; /* Adjust as needed */
+            max-height: 500px;
             padding: 1.5rem 1.5rem;
         }
         .sim-element {
@@ -55,15 +64,15 @@
             transform: scale(1.05);
             filter: grayscale(0%);
             opacity: 1;
-            box-shadow: 0 0 25px var(--glow-color, rgba(16, 185, 129, 0.7));
+            box-shadow: 0 0 25px var(--glow-color, rgba(45, 212, 191, 0.7));
         }
         .packet {
             position: absolute;
             width: 15px;
             height: 15px;
-            background-color: #10b981;
+            background-color: #2dd4bf;
             border-radius: 50%;
-            box-shadow: 0 0 10px #10b981, 0 0 20px #10b981;
+            box-shadow: 0 0 10px #2dd4bf, 0 0 20px #2dd4bf;
             opacity: 0;
             transition: all 1s ease-in-out;
             z-index: 50;
@@ -77,7 +86,7 @@
             border-left-width: 4px;
         }
         .connection-line {
-            stroke: #34d399;
+            stroke: #2dd4bf;
             stroke-width: 3;
             stroke-dasharray: 8 4;
             opacity: 0;
@@ -87,7 +96,7 @@
             position: relative;
             padding-left: 2.5rem;
             padding-bottom: 2rem;
-            border-left: 2px solid #e5e7eb;
+            border-left: 2px solid #374151; /* gray-700 */
         }
         .timeline-box:last-child {
             border-left: 2px solid transparent;
@@ -102,40 +111,43 @@
         }
     </style>
 </head>
-<body class="antialiased text-gray-800">
+<body class="antialiased">
+    <canvas id="bg-canvas"></canvas>
 
-    <header class="bg-white shadow-sm border-b border-gray-200 sticky top-0 z-50">
+    <header class="bg-[#11223A]/80 backdrop-blur-sm shadow-sm border-b border-gray-700 sticky top-0 z-50">
         <nav class="container mx-auto px-4 md:px-8 py-3 flex items-center justify-between">
-             <div class="flex items-center space-x-4">
-                    <img src="ASPIRE_Logo.jpg" alt="ASPIRE Project Logo" class="h-14 w-auto" />
-                    <h1 class="text-xl font-bold text-gray-800">ASPIRE Project</h1>
-             </div>
-             <a href="index.html" title="Back to Home" class="p-2 rounded-full hover:bg-teal-100 transition-colors flex items-center justify-center" style="height:2.5rem;width:2.5rem;">
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-teal-700" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l9-9 9 9M4 10v10a1 1 0 001 1h3m10-11v10a1 1 0 01-1 1h-3m-6 0h6" />
-                </svg>
-            </a>
+              <div class="flex items-center space-x-4">
+                  <!-- IMPORTANT: Do not change the image source path -->
+                  <img src="ASPIRE_Logo.jpg" alt="ASPIRE Project Logo" class="h-14 w-auto bg-white rounded-full p-1" onerror="this.onerror=null;this.src='https://placehold.co/56x56/ffffff/0d1a2e?text=Logo&font=inter';"/>
+                  <h1 class="text-xl font-bold text-white">ASPIRE Project</h1>
+              </div>
+              <!-- IMPORTANT: Do not change the home button link -->
+              <a href="index.html" title="Back to Home" class="p-2 rounded-full hover:bg-teal-500/20 transition-colors flex items-center justify-center" style="height:2.5rem;width:2.5rem;">
+                  <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-teal-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l9-9 9 9M4 10v10a1 1 0 001 1h3m10-11v10a1 1 0 01-1 1h-3m-6 0h6" />
+                  </svg>
+              </a>
         </nav>
     </header>
 
     <div class="container mx-auto p-4 md:p-8 max-w-7xl">
         <!-- Header -->
         <header class="text-center mb-10">
-             <h1 class="text-4xl md:text-5xl font-extrabold tracking-tight text-gray-900">
-                <span class="text-teal-600">A</span>gentic <span class="text-teal-600">S</span>ystem for Coherent and Interpretable <span class="text-teal-600">P</span>ark<span class="text-teal-600">I</span>nson's Disease <span class="text-teal-600">RE</span>search (<span class="text-teal-600">ASPIRE</span>)
+            <h1 class="text-4xl md:text-5xl font-extrabold tracking-tight text-white">
+                <span class="text-teal-400">A</span>gentic <span class="text-teal-400">S</span>ystem for Coherent and Interpretable <span class="text-teal-400">P</span>ark<span class="text-teal-400">I</span>nson's Disease <span class="text-teal-400">RE</span>search (<span class="text-teal-400">ASPIRE</span>)
             </h1>
         </header>
 
         <!-- Main Content with Tabs -->
-        <div class="bg-white rounded-2xl shadow-xl p-4 md:p-8 border border-gray-200">
+        <div class="bg-[#11223A]/80 backdrop-blur-md rounded-2xl shadow-xl p-4 md:p-8 border border-gray-700">
             
             <!-- Tab Buttons -->
-            <div class="border-b border-gray-200 mb-8">
+            <div class="border-b border-gray-700 mb-8">
                 <nav class="-mb-px flex justify-center space-x-2 md:space-x-8" aria-label="Tabs">
                     <button class="tab-btn active whitespace-nowrap py-4 px-3 border-b-2 font-semibold text-base" data-tab="overview">Project Vision</button>
-                    <button class="tab-btn whitespace-nowrap py-4 px-3 border-b-2 font-semibold text-base text-gray-500 hover:text-gray-700 hover:border-gray-300" data-tab="background">Key Challenges Addressed</button>
-                    <button class="tab-btn whitespace-nowrap py-4 px-3 border-b-2 font-semibold text-base text-gray-500 hover:text-gray-700 hover:border-gray-300" data-tab="project">Research Plan</button>
-                    <button class="tab-btn whitespace-nowrap py-4 px-3 border-b-2 font-semibold text-base text-gray-500 hover:text-gray-700 hover:border-gray-300" data-tab="simulation">Framework Simulation</button>
+                    <button class="tab-btn whitespace-nowrap py-4 px-3 border-b-2 font-semibold text-base text-gray-400 hover:text-gray-200 hover:border-gray-500" data-tab="background">Key Challenges Addressed</button>
+                    <button class="tab-btn whitespace-nowrap py-4 px-3 border-b-2 font-semibold text-base text-gray-400 hover:text-gray-200 hover:border-gray-500" data-tab="project">Research Plan</button>
+                    <button class="tab-btn whitespace-nowrap py-4 px-3 border-b-2 font-semibold text-base text-gray-400 hover:text-gray-200 hover:border-gray-500" data-tab="simulation">Framework Simulation</button>
                 </nav>
             </div>
 
@@ -144,66 +156,66 @@
                 <!-- Tab 1: Project Overview -->
                 <div id="overview" class="tab-content active">
                      <div class="max-w-4xl mx-auto">
-                        <!-- Timeline Box 1: Now & The Need -->
+                         <!-- Timeline Box 1: The Challenge -->
                         <div class="timeline-box">
                             <div class="timeline-icon bg-rose-500 rounded-full flex items-center justify-center text-white">
                                 <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
                             </div>
-                            <h3 class="text-2xl font-bold text-rose-800 mb-2">The Current Landscape</h3>
-                            <p class="text-gray-600 leading-relaxed">PD neuroimaging is a vibrant field, but its full potential is limited by a fragmented research landscape. Heterogeneous findings and isolated, small-scale studies make it difficult to converge on the clinically applicable biomarkers needed to improve patient care. To move forward, the field requires a new framework to enable a more cumulative and coherent approach to science.</p>
+                            <h3 class="text-2xl font-bold text-rose-300 mb-2">The Current Challenge in Medical Research</h3>
+                            <p class="text-gray-300 leading-relaxed">Research in data-rich medical fields often operates in silos, leading to fragmented efforts and heterogeneous findings. This slows the path from discovery to clinical application. A structured framework is urgently needed to enable a more cohesive and integrated science. The search for reliable neuroimaging biomarkers in Parkinson's Disease (PD) is a clear use case, hampered by these exact challenges.</p>
                         </div>
                         <!-- Timeline Box 2: The ASPIRE Solution -->
                         <div class="timeline-box">
                             <div class="timeline-icon bg-teal-500 rounded-full flex items-center justify-center text-white">
                                  <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M9.813 15.904L9 18.75l-.813-2.846a4.5 4.5 0 01-3.09-3.09L2.25 12l2.846-.813a4.5 4.5 0 013.09-3.09L9 5.25l.813 2.846a4.5 4.5 0 013.09 3.09L15.75 12l-2.846.813a4.5 4.5 0 01-3.09 3.09z" /></svg>
                             </div>
-                            <h3 class="text-2xl font-bold text-teal-800 mb-2">The ASPIRE Solution</h3>
-                            <p class="text-gray-600 leading-relaxed mb-6">ASPIRE is a user-centric, modular AI platform designed to be this new framework. The project will deliver two synergistic outputs to empower researchers:</p>
+                            <h3 class="text-2xl font-bold text-teal-300 mb-2">The ASPIRE Solution</h3>
+                            <p class="text-gray-300 leading-relaxed mb-6">ASPIRE is an AI-powered, interactive decision-support system designed to be this new framework. It empowers researchers by providing two synergistic outputs:</p>
                              <div class="space-y-6">
                                 <div class="flex items-start space-x-4">
-                                    <div class="flex-shrink-0 bg-sky-100 text-sky-600 rounded-lg p-3">
-                                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M4 7v10c0 2.21 3.582 4 8 4s8-1.79 8-4V7M4 7c0 2.21 3.582 4 8 4s8-1.79 8-4M4 7l8-4 8 4m-8 4v10" /></svg>
+                                     <div class="flex-shrink-0 bg-sky-500/20 text-sky-300 rounded-lg p-3">
+                                         <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M4 7v10c0 2.21 3.582 4 8 4s8-1.79 8-4V7M4 7c0 2.21 3.582 4 8 4s8-1.79 8-4M4 7l8-4 8 4m-8 4v10" /></svg>
                                     </div>
                                     <div>
-                                        <h4 class="font-bold text-lg text-sky-800">Core AI Assets</h4>
-                                        <p class="text-gray-600">A foundation of reusable knowledge and data representations, including literature-informed Knowledge Graphs (KGs) and pre-trained Foundational Models (FMs).</p>
+                                        <h4 class="font-bold text-lg text-sky-200">Core AI Assets</h4>
+                                        <p class="text-gray-400">A foundation of reusable knowledge, including human-curated Knowledge Graphs and pre-trained Foundation Models.</p>
                                     </div>
                                 </div>
                                 <div class="flex items-start space-x-4">
-                                     <div class="flex-shrink-0 bg-cyan-100 text-cyan-600 rounded-lg p-3">
-                                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M10 20l4-16m4 4l-4 4-4-4M6 16l-4-4 4-4" /></svg>
+                                      <div class="flex-shrink-0 bg-cyan-500/20 text-cyan-300 rounded-lg p-3">
+                                         <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M10 20l4-16m4 4l-4 4-4-4M6 16l-4-4 4-4" /></svg>
                                     </div>
                                     <div>
-                                        <h4 class="font-bold text-lg text-cyan-800">Intelligent Agentic System</h4>
-                                        <p class="text-gray-600">A modular system of specialized AI agents (Analyst, Theorist, Coder) that intelligently use the assets to automate complex analysis design for the end-user.</p>
+                                        <h4 class="font-bold text-lg text-cyan-200">Interactive Agentic System</h4>
+                                        <p class="text-gray-400">A modular system of specialized AI agents that act as collaborative partners, helping researchers design and execute transparent, evidence-based analyses.</p>
                                     </div>
                                 </div>
                             </div>
                         </div>
                          <!-- Timeline Box 3: The Future Vision -->
                         <div class="timeline-box">
-                             <div class="timeline-icon bg-indigo-500 rounded-full flex items-center justify-center text-white">
-                                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M13 10V3L4 14h7v7l9-11h-7z" /></svg>
+                              <div class="timeline-icon bg-indigo-500 rounded-full flex items-center justify-center text-white">
+                                 <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M13 10V3L4 14h7v7l9-11h-7z" /></svg>
                             </div>
-                            <h3 class="text-2xl font-bold text-indigo-800 mb-2">The Future Vision</h3>
-                             <p class="text-gray-600 leading-relaxed">With ASPIRE, researchers will no longer start from a blank slate. By providing the tools to seamlessly integrate new results with the existing evidence base, ASPIRE will accelerate the entire field's convergence on the discovery of trustworthy and clinically applicable biomarkers for Parkinson's Disease.</p>
+                            <h3 class="text-2xl font-bold text-indigo-300 mb-2">The Future Vision & Broader Impact</h3>
+                              <p class="text-gray-300 leading-relaxed">With ASPIRE, researchers will start from a systematic synthesis of prior knowledge. By fostering a more coherent and cumulative research process, ASPIRE will accelerate the discovery of reliable biomarkers in PD. This transformation will establish a powerful and transferable blueprint for other data-rich medical fields facing similar translational challenges.</p>
                         </div>
                     </div>
                 </div>
 
                 <!-- Tab 2: The Challenge -->
                 <div id="background" class="tab-content">
-                    <h2 class="text-3xl font-bold text-gray-800 mb-8 text-center">Key Challenges Addressed</h2>
+                    <h2 class="text-3xl font-bold text-white mb-8 text-center">Key Challenges Addressed</h2>
                     <div class="grid md:grid-cols-2 gap-8 max-w-5xl mx-auto">
                         <div class="space-y-6">
-                            <h3 class="text-2xl font-semibold text-center text-rose-800">Fragmented Research Landscape</h3>
-                            <div class="challenge-card bg-rose-50 p-6 rounded-lg border-rose-500"><div class="flex items-center mb-2"><svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-rose-600 mr-3" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M5 11h14" /></svg><h4 class="font-bold text-lg text-rose-700">Finding Heterogeneity</h4></div><p class="text-gray-600">The scientific literature contains heterogeneous, and often contradictory findings, making it difficult to synthesize a coherent evidence base.</p></div>
-                            <div class="challenge-card bg-rose-50 p-6 rounded-lg border-rose-500"><div class="flex items-center mb-2"><svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-rose-600 mr-3" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0zM13 13L3 3" /></svg><h4 class="font-bold text-lg text-rose-700">Small Sample Sizes</h4></div><p class="text-gray-600">Most clinical studies are small and isolated, limiting the generalizability of their findings and hindering a cumulative approach.</p></div>
+                            <h3 class="text-2xl font-semibold text-center text-rose-300">Fragmented Research Landscape</h3>
+                            <div class="challenge-card bg-rose-500/10 p-6 rounded-lg border-rose-500"><div class="flex items-center mb-2"><svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-rose-400 mr-3" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M5 11h14" /></svg><h4 class="font-bold text-lg text-rose-200">Finding Heterogeneity</h4></div><p class="text-gray-400">The scientific literature contains heterogeneous, and often contradictory findings, making it difficult to synthesize a coherent evidence base.</p></div>
+                            <div class="challenge-card bg-rose-500/10 p-6 rounded-lg border-rose-500"><div class="flex items-center mb-2"><svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-rose-400 mr-3" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0zM13 13L3 3" /></svg><h4 class="font-bold text-lg text-rose-200">Small Sample Sizes</h4></div><p class="text-gray-400">Most clinical studies are small and isolated, limiting the generalizability of their findings and hindering a cumulative approach.</p></div>
                         </div>
                         <div class="space-y-6">
-                            <h3 class="text-2xl font-semibold text-center text-amber-800">The Credibility Gap in Medical AI</h3>
-                            <div class="challenge-card bg-amber-50 p-6 rounded-lg border-amber-500"><div class="flex items-center mb-2"><svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-amber-600 mr-3" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4" /></svg><h4 class="font-bold text-lg text-amber-700">The "Black Box" Problem</h4></div><p class="text-gray-600">The internal workings of complex AI models are often opaque, creating a major barrier to clinical trust and interpretability.</p></div>
-                            <div class="challenge-card bg-amber-50 p-6 rounded-lg border-amber-500"><div class="flex items-center mb-2"><svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-amber-600 mr-3" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M8.228 9c.549-1.165 2.03-2 3.772-2 2.21 0 4 1.343 4 3 0 1.4-1.278 2.575-3.006 2.907-.542.104-.994.54-.994 1.093m0 3h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg><h4 class="font-bold text-lg text-amber-700">Lack of Domain Knowledge</h4></div><p class="text-gray-600">General-purpose AI models lack the specialized scientific knowledge required for nuanced and reliable medical analysis.</p></div>
+                            <h3 class="text-2xl font-semibold text-center text-amber-300">The Credibility Gap in Medical AI</h3>
+                            <div class="challenge-card bg-amber-500/10 p-6 rounded-lg border-amber-500"><div class="flex items-center mb-2"><svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-amber-400 mr-3" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4" /></svg><h4 class="font-bold text-lg text-amber-200">The "Black Box" Problem</h4></div><p class="text-gray-400">The internal workings of complex AI models are often opaque, creating a major barrier to clinical trust and interpretability.</p></div>
+                            <div class="challenge-card bg-amber-500/10 p-6 rounded-lg border-amber-500"><div class="flex items-center mb-2"><svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-amber-400 mr-3" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M8.228 9c.549-1.165 2.03-2 3.772-2 2.21 0 4 1.343 4 3 0 1.4-1.278 2.575-3.006 2.907-.542.104-.994.54-.994 1.093m0 3h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg><h4 class="font-bold text-lg text-amber-200">Lack of Domain Knowledge</h4></div><p class="text-gray-400">General-purpose AI models lack the specialized scientific knowledge required for nuanced and reliable medical analysis.</p></div>
                         </div>
                     </div>
                 </div>
@@ -218,17 +230,62 @@
     </div>
 
     <script>
+        // --- Canvas Background ---
+        const canvas = document.getElementById('bg-canvas');
+        const ctx = canvas.getContext('2d');
+
+        function resizeCanvas() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        }
+
+        function drawBackground() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            
+            // Gradient
+            const gradient = ctx.createLinearGradient(0, 0, 0, canvas.height);
+            gradient.addColorStop(0, '#0d1a2e');
+            gradient.addColorStop(1, '#11223A');
+            ctx.fillStyle = gradient;
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+            // Grid lines
+            ctx.strokeStyle = 'rgba(45, 212, 191, 0.05)';
+            ctx.lineWidth = 1;
+            const gridSize = 50;
+            for (let x = 0; x < canvas.width; x += gridSize) {
+                ctx.beginPath();
+                ctx.moveTo(x, 0);
+                ctx.lineTo(x, canvas.height);
+                ctx.stroke();
+            }
+            for (let y = 0; y < canvas.height; y += gridSize) {
+                ctx.beginPath();
+                ctx.moveTo(0, y);
+                ctx.lineTo(canvas.width, y);
+                ctx.stroke();
+            }
+        }
+        
+        window.addEventListener('resize', () => {
+            resizeCanvas();
+            drawBackground();
+        });
+        resizeCanvas();
+        drawBackground();
+
+
         // --- Tab Switching Logic ---
         const tabButtons = document.querySelectorAll('.tab-btn');
         const tabContents = document.querySelectorAll('.tab-content');
         tabButtons.forEach(button => {
             button.addEventListener('click', () => {
                 tabButtons.forEach(btn => {
-                    btn.classList.remove('active', 'border-teal-600', 'text-teal-700', 'bg-teal-50');
-                    btn.classList.add('text-gray-500', 'hover:text-gray-700', 'hover:border-gray-300');
+                    btn.classList.remove('active');
+                    btn.classList.add('text-gray-400', 'hover:text-gray-200', 'hover:border-gray-500');
                 });
-                button.classList.add('active', 'border-teal-600', 'text-teal-700', 'bg-teal-50');
-                button.classList.remove('text-gray-500', 'hover:text-gray-700', 'hover:border-gray-300');
+                button.classList.add('active');
+                button.classList.remove('text-gray-400', 'hover:text-gray-200', 'hover:border-gray-500');
                 const tabId = button.dataset.tab;
                 tabContents.forEach(content => {
                     content.classList.toggle('active', content.id === tabId);
@@ -248,7 +305,7 @@
                     const isOpening = !details.classList.contains('open');
 
                     allDetails.forEach(d => {
-                         d.classList.remove('open');
+                        d.classList.remove('open');
                     });
                     
                     if (isOpening) {
@@ -261,27 +318,27 @@
         // --- Populate and Initialize Other Tabs ---
         function populateOtherTabs() {
             const projectTab = document.getElementById('project');
-            // NEW COLOR DEFINITIONS
             const colors = {
-                wp1: { bg: 'bg-teal-50', text: 'text-teal-800', border: 'border-teal-500', iconBg: 'bg-teal-500', hoverBorder: 'hover:border-teal-400' },
-                wp2: { bg: 'bg-emerald-50', text: 'text-emerald-800', border: 'border-emerald-500', iconBg: 'bg-emerald-500', hoverBorder: 'hover:border-emerald-400' },
-                wp3: { bg: 'bg-cyan-50', text: 'text-cyan-800', border: 'border-cyan-500', iconBg: 'bg-cyan-500', hoverBorder: 'hover:border-cyan-400' },
-                wp4: { bg: 'bg-sky-50', text: 'text-sky-800', border: 'border-sky-500', iconBg: 'bg-sky-500', hoverBorder: 'hover:border-sky-400' }
+                wp1: { bg: 'bg-teal-500/10', text: 'text-teal-200', border: 'border-teal-500', iconBg: 'bg-teal-500/80', hoverBorder: 'hover:border-teal-400' },
+                wp2: { bg: 'bg-emerald-500/10', text: 'text-emerald-200', border: 'border-emerald-500', iconBg: 'bg-emerald-500/80', hoverBorder: 'hover:border-emerald-400' },
+                wp3: { bg: 'bg-cyan-500/10', text: 'text-cyan-200', border: 'border-cyan-500', iconBg: 'bg-cyan-500/80', hoverBorder: 'hover:border-cyan-400' },
+                wp4: { bg: 'bg-sky-500/10', text: 'text-sky-200', border: 'border-sky-500', iconBg: 'bg-sky-500/80', hoverBorder: 'hover:border-sky-400' }
             };
 
             projectTab.innerHTML = `
-                <h2 class="text-3xl font-bold text-gray-800 mb-6 text-center">Our Research Plan</h2>
+                <h2 class="text-3xl font-bold text-white mb-6 text-center">Our Research Plan</h2>
                 <div class="max-w-5xl mx-auto">
-                    <p class="text-center text-gray-600 mb-8">The project is organized into four interconnected Work Packages (WPs), executed by a team of a Group Leader and two PhD students. Click on each package to see the detailed plan.</p>
+                    <p class="text-center text-gray-400 mb-8">The project is organized into four interconnected Work Packages (WPs), executed by a team of a Group Leader (GL), two PhD students (PhD1, PhD2), and student assistans (SA). Click on each package to see the detailed plan.</p>
                     <div class="space-y-4" id="wp-container">
-                        <div class="wp-card-container"><div class="wp-card cursor-pointer ${colors.wp1.bg} p-4 rounded-lg flex items-center space-x-4 border-2 border-transparent ${colors.wp1.hoverBorder}" data-wp="wp1"><div class="${colors.wp1.iconBg} p-3 rounded-full text-white"><svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M12 6.042A8.967 8.967 0 006 3.75c-1.052 0-2.062.18-3 .512v14.25A8.987 8.987 0 016 18c2.185 0 4.236.668 6 1.848 1.764-1.18 3.815-1.848 6-1.848A8.987 8.987 0 0118 18.5V4.262c-.938-.332-1.948-.512-3-.512A8.967 8.967 0 0012 6.042z"/></svg></div><div><h4 class="font-bold ${colors.wp1.text}">WP 1: Knowledge Graph Development</h4><p class="text-sm ${colors.wp1.text.replace('800', '700')}">Systematically organize findings from literature into a suite of KGs.</p></div></div><div class="wp-details ${colors.wp1.bg} ${colors.wp1.border}" id="wp1-details"><p><strong>Personnel:</strong> GL, SA</p><p><strong>Key Achievements:</strong> A suite of literature-grounded KGs; An interactive web-app for KG exploration; A fine-tuned LLM for literature extraction.</p></div></div>
-                        <div class="wp-card-container"><div class="wp-card cursor-pointer ${colors.wp2.bg} p-4 rounded-lg flex items-center space-x-4 border-2 border-transparent ${colors.wp2.hoverBorder}" data-wp="wp2"><div class="${colors.wp2.iconBg} p-3 rounded-full text-white"><svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M9 3v2m6-2v2M9 19v2m6-2v2M5 9H3m2 6H3m18-6h-2m2 6h-2M12 6V3m0 18v-3M5.636 5.636l-1.414-1.414m15.152 0l-1.414 1.414M18.364 18.364l-1.414-1.414m-12.3-1.414l1.414 1.414M12 12a6 6 0 110-12 6 6 0 010 12z" /></svg></div><div><h4 class="font-bold ${colors.wp2.text}">WP 2: Foundational Model Development</h4><p class="text-sm ${colors.wp2.text.replace('800', '700')}">Pre-train a collection of large DL models (FMs) on public datasets.</p></div></div><div class="wp-details ${colors.wp2.bg} ${colors.wp2.border}" id="wp2-details"><p><strong>Personnel:</strong> PhD1, GL, SA</p><p><strong>Key Achievements:</strong> A collection of validated FMs; A systematic review of self-supervised methods; A validation paper on the FMs' utility.</p></div></div>
-                        <div class="wp-card-container"><div class="wp-card cursor-pointer ${colors.wp3.bg} p-4 rounded-lg flex items-center space-x-4 border-2 border-transparent ${colors.wp3.hoverBorder}" data-wp="wp3"><div class="${colors.wp3.iconBg} p-3 rounded-full text-white"><svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" /></svg></div><div><h4 class="font-bold ${colors.wp3.text}">WP 3: Agent Configuration</h4><p class="text-sm ${colors.wp3.text.replace('800', '700')}">Configure the three modular agents for their specialized tasks.</p></div></div><div class="wp-details ${colors.wp3.bg} ${colors.wp3.border}" id="wp3-details"><p><strong>Personnel:</strong> PhD2, PhD1, GL</p><p><strong>Key Achievements:</strong> Three specialized and configured AI agents; A publication on the structure-guided RAG framework.</p></div></div>
-                         <div class="wp-card-container"><div class="wp-card cursor-pointer ${colors.wp4.bg} p-4 rounded-lg flex items-center space-x-4 border-2 border-transparent ${colors.wp4.hoverBorder}" data-wp="wp4"><div class="${colors.wp4.iconBg} p-3 rounded-full text-white"><svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg></div><div><h4 class="font-bold ${colors.wp4.text}">WP 4: System Integration & Validation</h4><p class="text-sm ${colors.wp4.text.replace('800', '700')}">Integrate, validate, and deploy the full agentic system.</p></div></div><div class="wp-details ${colors.wp4.bg} ${colors.wp4.border}" id="wp4-details"><p><strong>Personnel:</strong> All group members</p><p><strong>Key Achievements:</strong> The fully integrated ASPIRE platform; Comprehensive user documentation and tutorials; A final system validation paper.</p></div></div>
+                        <div class="wp-card-container"><div class="wp-card cursor-pointer ${colors.wp1.bg} p-4 rounded-lg flex items-center space-x-4 border-2 border-transparent ${colors.wp1.hoverBorder}" data-wp="wp1"><div class="${colors.wp1.iconBg} p-3 rounded-full text-white"><svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M12 6.042A8.967 8.967 0 006 3.75c-1.052 0-2.062.18-3 .512v14.25A8.987 8.987 0 016 18c2.185 0 4.236.668 6 1.848 1.764-1.18 3.815-1.848 6-1.848A8.987 8.987 0 0118 18.5V4.262c-.938-.332-1.948-.512-3-.512A8.967 8.967 0 0012 6.042z"/></svg></div><div><h4 class="font-bold ${colors.wp1.text}">WP 1: Knowledge Graph Development</h4><p class="text-sm text-gray-400">Systematically organize findings from literature into a suite of KGs via a human-in-the-loop process.</p></div></div><div class="wp-details ${colors.wp1.bg} ${colors.wp1.border}" id="wp1-details"><p class="text-gray-200"><strong>Personnel:</strong> GL, SA</p><p class="text-gray-300"><strong>Key Achievements:</strong> A suite of human-curated KGs; An interactive web-app for KG exploration; A fine-tuned LLM for sustainable literature extraction.</p></div></div>
+                        <div class="wp-card-container"><div class="wp-card cursor-pointer ${colors.wp2.bg} p-4 rounded-lg flex items-center space-x-4 border-2 border-transparent ${colors.wp2.hoverBorder}" data-wp="wp2"><div class="${colors.wp2.iconBg} p-3 rounded-full text-white"><svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M9 3v2m6-2v2M9 19v2m6-2v2M5 9H3m2 6H3m18-6h-2m2 6h-2M12 6V3m0 18v-3M5.636 5.636l-1.414-1.414m15.152 0l-1.414 1.414M18.364 18.364l-1.414-1.414m-12.3-1.414l1.414 1.414M12 12a6 6 0 110-12 6 6 0 010 12z" /></svg></div><div><h4 class="font-bold ${colors.wp2.text}">WP 2: Foundation Model Development</h4><p class="text-sm text-gray-400">Pre-train a collection of large DL models on public datasets to learn generalizable brain patterns.</p></div></div><div class="wp-details ${colors.wp2.bg} ${colors.wp2.border}" id="wp2-details"><p class="text-gray-200"><strong>Personnel:</strong> PhD1, GL, SA</p><p class="text-gray-300"><strong>Key Achievements:</strong> A collection of validated Foundation Models; A systematic review of self-supervised methods; A validation paper on the models' utility.</p></div></div>
+                        <div class="wp-card-container"><div class="wp-card cursor-pointer ${colors.wp3.bg} p-4 rounded-lg flex items-center space-x-4 border-2 border-transparent ${colors.wp3.hoverBorder}" data-wp="wp3"><div class="${colors.wp3.iconBg} p-3 rounded-full text-white"><svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" /></svg></div><div><h4 class="font-bold ${colors.wp3.text}">WP 3: Agent Configuration</h4><p class="text-sm text-gray-400">Configure the three modular agents to act as collaborative, specialized research assistants.</p></div></div><div class="wp-details ${colors.wp3.bg} ${colors.wp3.border}" id="wp3-details"><p class="text-gray-200"><strong>Personnel:</strong> PhD2, PhD1, GL</p><p class="text-gray-300"><strong>Key Achievements:</strong> Three specialized AI agents; A publication on the structure-guided RAG framework for knowledge retrieval.</p></div></div>
+                         <div class="wp-card-container"><div class="wp-card cursor-pointer ${colors.wp4.bg} p-4 rounded-lg flex items-center space-x-4 border-2 border-transparent ${colors.wp4.hoverBorder}" data-wp="wp4"><div class="${colors.wp4.iconBg} p-3 rounded-full text-white"><svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg></div><div><h4 class="font-bold ${colors.wp4.text}">WP 4: System Integration & Validation</h4><p class="text-sm text-gray-400">Integrate, validate via User Acceptance Testing, and deploy the full interactive system.</p></div></div><div class="wp-details ${colors.wp4.bg} ${colors.wp4.border}" id="wp4-details"><p class="text-gray-200"><strong>Personnel:</strong> All group members</p><p class="text-gray-300"><strong>Key Achievements:</strong> The fully integrated ASPIRE platform; Comprehensive user documentation and tutorials; A final system validation paper.</p></div></div>
                     </div>
-                    <h3 class="text-2xl font-semibold text-center mt-10 mb-4">Project Timeline</h3>
+                    <h3 class="text-2xl font-semibold text-center mt-10 mb-4 text-white">Project Timeline</h3>
                     <div class="px-4">
-                        <img src="ASPIRE_timeline.jpg" alt="Gantt Chart of the ASPIRE project timeline" class="rounded-lg border shadow-md" onerror="this.onerror=null;this.src='https://placehold.co/1200x600/e2e8f0/475569?text=Gantt+Chart+Image+Not+Found';">
+                        <!-- IMPORTANT: Do not change the image source path -->
+                        <img src="ASPIRE_timeline.jpg" alt="Gantt Chart of the ASPIRE project timeline" class="rounded-lg border border-gray-700 shadow-md" onerror="this.onerror=null;this.src='https://placehold.co/1200x600/374151/e5e7eb?text=Gantt+Chart+Image+Not+Found';">
                     </div>
                 </div>
             `;
@@ -292,13 +349,13 @@
                 <div class="text-center mb-6">
                     <button id="start-btn" class="bg-teal-500 hover:bg-teal-600 text-white font-bold py-3 px-8 rounded-lg shadow-lg transition-transform transform hover:scale-105">Start Simulation</button>
                 </div>
-                <div id="viz-area" class="relative w-full max-w-5xl mx-auto h-[450px] border bg-gray-50/50 rounded-lg p-4">
+                <div id="viz-area" class="relative w-full max-w-5xl mx-auto h-[450px] border border-gray-700 bg-black/20 rounded-lg p-4">
                     <svg id="connection-svg" class="absolute top-0 left-0 w-full h-full pointer-events-none z-10"></svg>
-                    <div id="packet"></div>
+                    <div id="packet" class="packet"></div>
                 </div>
                 <div class="mt-6">
-                    <h3 class="text-xl font-bold text-center mb-4">Simulation Log</h3>
-                    <div id="log" class="bg-gray-900 text-white font-mono text-sm rounded-lg p-4 h-48 overflow-y-auto space-y-2">
+                    <h3 class="text-xl font-bold text-center mb-4 text-white">Simulation Log</h3>
+                    <div id="log" class="bg-gray-900 text-white font-mono text-sm rounded-lg p-4 h-48 overflow-y-auto space-y-2 border border-gray-700">
                         <p class="text-gray-400">> Waiting for simulation to start...</p>
                     </div>
                 </div>
@@ -309,9 +366,9 @@
         function initializeSimulation() {
             const vizArea = document.getElementById('viz-area');
             vizArea.insertAdjacentHTML('afterbegin', `
-                <div id="user" style="--glow-color: rgba(107, 114, 128, 0.7);" class="sim-element absolute top-1/2 -translate-y-1/2 left-8 w-28 h-28 bg-gray-200 rounded-full flex flex-col items-center justify-center text-center p-2"><svg class="h-8 w-8 text-gray-600" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg><span class="font-bold text-sm mt-1 text-gray-800">Researcher</span></div>
-                <div class="absolute top-1/2 -translate-y-1/2 left-1/2 -translate-x-1/2 w-72 h-72 border-2 border-dashed border-teal-300 rounded-2xl flex items-center justify-center"><span class="absolute -top-3 bg-gray-50/50 px-2 text-sm font-bold text-teal-700">Agentic Platform</span><div id="analyst" style="--glow-color: rgba(13, 148, 136, 0.7);" class="sim-element absolute top-4 w-24 h-24 bg-teal-200 rounded-full flex flex-col items-center justify-center text-center p-1"><svg class="h-8 w-8 text-teal-700" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M9.813 15.904L9 18.75l-.813-2.846a4.5 4.5 0 01-3.09-3.09L2.25 12l2.846-.813a4.5 4.5 0 013.09-3.09L9 5.25l.813 2.846a4.5 4.5 0 013.09 3.09L15.75 12l-2.846.813a4.5 4.5 0 01-3.09 3.09z"/></svg><span class="font-bold text-xs mt-1 text-teal-900">Analyst</span></div><div id="theorist" style="--glow-color: rgba(13, 148, 136, 0.7);" class="sim-element absolute bottom-4 left-4 w-24 h-24 bg-teal-200 rounded-full flex flex-col items-center justify-center text-center p-1"><svg class="h-8 w-8 text-teal-700" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3.75 21h16.5M4.5 3h15M5.25 3v18m13.5-18v18M9 6.75h6.75M9 11.25h6.75M9 15.75h6.75"/></svg><span class="font-bold text-xs mt-1 text-teal-900">Theorist</span></div><div id="coder" style="--glow-color: rgba(13, 148, 136, 0.7);" class="sim-element absolute bottom-4 right-4 w-24 h-24 bg-teal-200 rounded-full flex flex-col items-center justify-center text-center p-1"><svg class="h-8 w-8 text-teal-700" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M6.75 7.5l3 2.25-3 2.25m4.5 0h3m-9 8.25h13.5A2.25 2.25 0 0021 18V6a2.25 2.25 0 00-2.25-2.25H5.25A2.25 2.25 0 003 6v12a2.25 2.25 0 002.25 2.25z" /></svg><span class="font-bold text-xs mt-1 text-teal-900">Coder</span></div></div>
-                <div class="absolute top-1/2 -translate-y-1/2 right-8 w-36 h-80 border-2 border-dashed border-sky-300 rounded-2xl flex flex-col items-center justify-around"><span class="absolute -top-3 bg-gray-50/50 px-2 text-sm font-bold text-sky-700">AI Assets</span><div id="kg" style="--glow-color: rgba(2, 132, 199, 0.7);" class="sim-element w-28 h-28 bg-sky-200 rounded-full flex flex-col items-center justify-center text-center p-2"><svg class="h-8 w-8 text-sky-700" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M10.5 6a7.5 7.5 0 100 15 7.5 7.5 0 000-15zM21 21l-5.197-5.197" /></svg><span class="font-bold text-xs mt-1 text-sky-900">Knowledge Graphs</span></div><div id="fm" style="--glow-color: rgba(2, 132, 199, 0.7);" class="sim-element w-28 h-28 bg-sky-200 rounded-full flex flex-col items-center justify-center text-center p-2"><svg class="h-8 w-8 text-sky-700" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3.75 3.75v4.5m0-4.5h4.5m-4.5 0L9 9M3.75 20.25v-4.5m0 4.5h4.5m-4.5 0L9 15M20.25 3.75h-4.5m4.5 0v4.5m0-4.5L15 9m5.25 11.25h-4.5m4.5 0v-4.5m0 4.5L15 15" /></svg><span class="font-bold text-xs mt-1 text-sky-900">Foundational Models</span></div></div>
+                <div id="user" style="--glow-color: rgba(107, 114, 128, 0.7);" class="sim-element absolute top-1/2 -translate-y-1/2 left-8 w-28 h-28 bg-gray-700 border border-gray-500 rounded-full flex flex-col items-center justify-center text-center p-2"><svg class="h-8 w-8 text-gray-300" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg><span class="font-bold text-sm mt-1 text-gray-200">Researcher</span></div>
+                <div class="absolute top-1/2 -translate-y-1/2 left-1/2 -translate-x-1/2 w-72 h-72 border-2 border-dashed border-teal-700 rounded-2xl flex items-center justify-center"><span class="absolute -top-3 bg-[#11223A] px-2 text-sm font-bold text-teal-400">Agentic Platform</span><div id="analyst" style="--glow-color: rgba(45, 212, 191, 0.7);" class="sim-element absolute top-4 w-24 h-24 bg-teal-900/50 border border-teal-700 rounded-full flex flex-col items-center justify-center text-center p-1"><svg class="h-8 w-8 text-teal-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M9.813 15.904L9 18.75l-.813-2.846a4.5 4.5 0 01-3.09-3.09L2.25 12l2.846-.813a4.5 4.5 0 013.09-3.09L9 5.25l.813 2.846a4.5 4.5 0 013.09 3.09L15.75 12l-2.846.813a4.5 4.5 0 01-3.09 3.09z"/></svg><span class="font-bold text-xs mt-1 text-teal-200">Analyst</span></div><div id="theorist" style="--glow-color: rgba(45, 212, 191, 0.7);" class="sim-element absolute bottom-4 left-4 w-24 h-24 bg-teal-900/50 border border-teal-700 rounded-full flex flex-col items-center justify-center text-center p-1"><svg class="h-8 w-8 text-teal-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3.75 21h16.5M4.5 3h15M5.25 3v18m13.5-18v18M9 6.75h6.75M9 11.25h6.75M9 15.75h6.75"/></svg><span class="font-bold text-xs mt-1 text-teal-200">Theorist</span></div><div id="coder" style="--glow-color: rgba(45, 212, 191, 0.7);" class="sim-element absolute bottom-4 right-4 w-24 h-24 bg-teal-900/50 border border-teal-700 rounded-full flex flex-col items-center justify-center text-center p-1"><svg class="h-8 w-8 text-teal-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M6.75 7.5l3 2.25-3 2.25m4.5 0h3m-9 8.25h13.5A2.25 2.25 0 0021 18V6a2.25 2.25 0 00-2.25-2.25H5.25A2.25 2.25 0 003 6v12a2.25 2.25 0 002.25 2.25z" /></svg><span class="font-bold text-xs mt-1 text-teal-200">Coder</span></div></div>
+                <div class="absolute top-1/2 -translate-y-1/2 right-8 w-36 h-80 border-2 border-dashed border-sky-700 rounded-2xl flex flex-col items-center justify-around"><span class="absolute -top-3 bg-[#11223A] px-2 text-sm font-bold text-sky-400">AI Assets</span><div id="kg" style="--glow-color: rgba(56, 189, 248, 0.7);" class="sim-element w-28 h-28 bg-sky-900/50 border border-sky-700 rounded-full flex flex-col items-center justify-center text-center p-2"><svg class="h-8 w-8 text-sky-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M10.5 6a7.5 7.5 0 100 15 7.5 7.5 0 000-15zM21 21l-5.197-5.197" /></svg><span class="font-bold text-xs mt-1 text-sky-200">Knowledge Graphs</span></div><div id="fm" style="--glow-color: rgba(56, 189, 248, 0.7);" class="sim-element w-28 h-28 bg-sky-900/50 border border-sky-700 rounded-full flex flex-col items-center justify-center text-center p-2"><svg class="h-8 w-8 text-sky-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3.75 3.75v4.5m0-4.5h4.5m-4.5 0L9 9M3.75 20.25v-4.5m0 4.5h4.5m-4.5 0L9 15M20.25 3.75h-4.5m4.5 0v4.5m0-4.5L15 9m5.25 11.25h-4.5m4.5 0v-4.5m0 4.5L15 15" /></svg><span class="font-bold text-xs mt-1 text-sky-200">Foundation Models</span></div></div>
             `);
 
             const startBtn = document.getElementById('start-btn');
@@ -331,24 +388,25 @@
             const workflow = [
                 { agent: 'user', action: 'activate', message: 'Researcher asks: "Classify PD from HC in my small cohort using dFC."' },
                 { from: 'user', to: 'analyst', message: 'Analyst receives user query...' },
-                { agent: 'analyst', action: 'activate', message: 'Analyst parses query: `goal=classification`, `modality=dFC`, `constraint=small_dataset`.' },
-                { agent: 'analyst', action: 'think', message: 'Analyst determines strategy: Transfer Learning is required. Consulting assets...' },
-                { from: 'analyst', to: 'theorist', message: 'Analyst -> Theorist: Requesting literature evidence for `PD vs HC` from `KG_Dynamic_FC`.' },
+                { agent: 'analyst', action: 'activate', message: 'Analyst parses query and determines initial strategy...' },
+                { from: 'analyst', to: 'theorist', message: 'Analyst -> Theorist: Requesting literature evidence...' },
                 { agent: 'theorist', action: 'activate', message: 'Theorist: Accessing Knowledge Graph...' },
-                { from: 'theorist', to: 'kg', message: 'Theorist -> KG: Querying for dFC features that differ between PD and HC.' },
-                { agent: 'kg', action: 'activate', message: 'KG: Found evidence that `dwell time` in SMN-FPN state is lower in PD.' },
+                { from: 'theorist', to: 'kg', message: 'Theorist -> KG: Querying for relevant dFC features.' },
+                { agent: 'kg', action: 'activate', message: 'KG: Found evidence for `dwell time` in SMN-FPN state.' },
                 { from: 'kg', to: 'theorist', message: 'KG -> Theorist: Returning structured finding.' },
-                { from: 'theorist', to: 'analyst', message: 'Theorist -> Analyst: Providing top finding as JSON.' },
+                { from: 'theorist', to: 'analyst', message: 'Theorist -> Analyst: Providing finding as JSON.' },
                 { from: 'analyst', to: 'fm', message: 'Analyst -> FMs: Searching for a pre-trained dFC model.' },
-                { agent: 'fm', action: 'activate', message: 'FMs: Found "Model_dFC_HCP" with high internal validation score.' },
+                { agent: 'fm', action: 'activate', message: 'FMs: Found suitable model with high validation score.' },
                 { from: 'fm', to: 'analyst', message: 'FMs -> Analyst: Recommending "Model_dFC_HCP".' },
-                { agent: 'analyst', action: 'think', message: 'Analyst: Strategy finalized. Generating step-by-step analysis plan...' },
-                { agent: 'analyst', action: 'activate', message: 'Analyst to User: "Strategy: Fine-tune Model_dFC_HCP, regularized by the SMN-FPN `dwell time` finding."' },
-                { from: 'analyst', to: 'coder', message: 'Analyst -> Coder: Task 1: Generate code to load user data and selected FM.' },
-                { agent: 'coder', action: 'activate', message: 'Coder: Writing Python code for data loading...' },
-                { from: 'analyst', to: 'coder', message: 'Analyst -> Coder: Task 2: Generate code for knowledge-guided fine-tuning.' },
-                { agent: 'coder', action: 'think', message: 'Coder: Implementing feature selection based on the KG finding and writing training loop...' },
-                { agent: 'coder', action: 'activate', message: 'Coder: Final script assembled.' },
+                { agent: 'analyst', action: 'think', message: 'Analyst: Synthesizing assets into a proposed plan...' },
+                { from: 'analyst', to: 'user', message: 'Analyst -> Researcher: "Proposed Strategy: Fine-tune Model_dFC_HCP, regularized by the SMN-FPN `dwell time` finding. Do you approve?"' },
+                { agent: 'user', action: 'activate', message: 'Researcher: Reviewing plan... Brainstorming alternatives... The proposed strategy is sound.' },
+                { agent: 'user', action: 'think', message: 'Researcher -> Analyst: "I approve the plan. Please proceed."' },
+                { from: 'user', to: 'analyst', message: 'Analyst receives researcher approval.' },
+                { agent: 'analyst', action: 'activate', message: 'Analyst: Researcher has approved the plan. Tasking Coder...' },
+                { from: 'analyst', to: 'coder', message: 'Analyst -> Coder: Task: Generate knowledge-guided fine-tuning script.' },
+                { agent: 'coder', action: 'activate', message: 'Coder: Writing Python script...' },
+                { agent: 'coder', action: 'think', message: 'Coder: Assembling final, commented script for user.' },
                 { from: 'coder', to: 'user', message: 'Coder -> Researcher: Presenting final, executable analysis script.' },
                 { agent: 'user', action: 'activate', message: 'Researcher: Analysis ready to run!' },
             ];
@@ -395,24 +453,27 @@
                 drawConnection(fromEl, toEl);
                 const start = getElementCenter(fromEl);
                 const end = getElementCenter(toEl);
-                packet.style.left = `${start.x}px`;
-                packet.style.top = `${start.y}px`;
+                packet.style.left = `${start.x - 7.5}px`;
+                packet.style.top = `${start.y - 7.5}px`;
                 packet.style.opacity = '1';
-                await sleep(50); // wait for styles to apply
-                packet.style.left = `${end.x}px`;
-                packet.style.top = `${end.y}px`;
+                await sleep(50);
+                packet.style.left = `${end.x - 7.5}px`;
+                packet.style.top = `${end.y - 7.5}px`;
                 await sleep(1000);
                 packet.style.opacity = '0';
                 if(currentLine) currentLine.style.opacity = '0';
                 await sleep(300);
             }
 
-            function setActive(elementKey) {
+            function setActive(elementKeys) {
+                const keys = Array.isArray(elementKeys) ? elementKeys : [elementKeys];
                 const allElements = document.querySelectorAll('.sim-element');
                 allElements.forEach(el => el.classList.remove('active'));
-                if (elementKey && elements[elementKey]) {
-                    elements[elementKey].classList.add('active');
-                }
+                keys.forEach(key => {
+                    if (key && elements[key]) {
+                        elements[key].classList.add('active');
+                    }
+                });
             }
 
             async function runSimulation() {
@@ -426,7 +487,7 @@
                     if (step.from && step.to) {
                         await movePacket(elements[step.from], elements[step.to]);
                     } else {
-                        await sleep(2500); // Slower speed here
+                        await sleep(2500);
                     }
                 }
 
@@ -446,4 +507,3 @@
     </script>
 </body>
 </html>
-
